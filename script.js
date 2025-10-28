@@ -12,6 +12,14 @@ function initTerminalLoader() {
     
     if (!terminalLoader || !terminalOutput) return;
     
+    // Fallback: auto-hide loader if it gets stuck
+    setTimeout(() => {
+        if (terminalLoader.classList.contains('active')) {
+            terminalLoader.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    }, 10000);
+    
     const commands = [
         { text: '> INITIALIZING SYSTEM...', delay: 100 },
         { text: '> LOADING MODULES...', delay: 200 },
@@ -57,9 +65,11 @@ function initTerminalLoader() {
 }
 
 // Run terminal loader when the loader element exists (works on GitHub Pages subpaths)
-if (document.getElementById('terminal-loader')) {
-    window.addEventListener('load', initTerminalLoader);
-}
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('terminal-loader')) {
+        window.addEventListener('load', initTerminalLoader);
+    }
+});
 
 // ========================================
 // NAVIGATION ACTIVE STATE
