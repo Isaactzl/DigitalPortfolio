@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects // Isaac Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo">ISAAC<span class="fuchsia">.DEV</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">// HOME</a></li>
+                <li><a href="about.html" class="nav-link">// ABOUT</a></li>
+                <li><a href="projects.html" class="nav-link active">// PROJECTS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Projects Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">// PROJECT_ARCHIVE</h1>
+            <p class="page-subtitle mono">A Collection of Digital Creations</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="game">Game Development</button>
+                <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="container">
+            <!-- Web Project 1 -->
+            <article class="project-detail" data-category="web">
+                <div class="project-header">
+                    <h2 class="project-title">ZYPHER E-Bike Landing Page</h2>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Three.js</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/ZYPHER/ZYPHER_TN.png" alt="ZYPHER E-Bike Landing Page" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            An immersive landing page for ZYPHER E-Bike featuring interactive 3D models, smooth animations, and modern web design. Built to showcase the product with engaging visual elements and seamless user experience.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>3D Model Integration:</strong> Implemented Three.js to load and display interactive 3D bike models with smooth camera controls and realistic lighting.</li>
+                                <li><strong>Performance Optimization:</strong> Optimized 3D models and textures to ensure fast loading times while maintaining visual quality across different devices.</li>
+                                <li><strong>Responsive 3D:</strong> Created adaptive 3D viewport that scales appropriately on mobile devices while maintaining interactive functionality.</li>
+                                <li><strong>Smooth Animations:</strong> Implemented GSAP animations for scroll-triggered effects and smooth transitions between sections.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="zypher-ebike">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Game Project 1 -->
+            <article class="project-detail" data-category="game">
+                <div class="project-header">
+                    <h2 class="project-title">CHIKIA - Story-Based Adventure</h2>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Story Design</span>
+                        <span class="tag">Minigames</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/CHIKIA/Chikia_TN.png" alt="CHIKIA Story-Based Adventure" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            An immersive story-driven game featuring multiple minigames and interactive narratives. Players explore different worlds while engaging in various challenges and puzzles, creating a rich, interconnected gaming experience.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// ENGINEERING_REPORT</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Modular Minigame System:</strong> Designed a flexible framework allowing seamless integration of multiple game types within a single Unity project using Scriptable Objects and state management.</li>
+                                <li><strong>Narrative System:</strong> Implemented a branching dialogue system with save/load functionality, allowing players to make choices that affect the story progression and character relationships.</li>
+                                <li><strong>Character Progression:</strong> Created a comprehensive progression system tracking player achievements, story completion, and minigame performance across multiple playthroughs.</li>
+                                <li><strong>Audio Integration:</strong> Developed a dynamic audio system that adapts to story context and player actions, enhancing immersion through adaptive music and sound effects.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="chikia">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Web Project 2 -->
+            <article class="project-detail" data-category="web fullstack">
+                <div class="project-header">
+                    <h2 class="project-title">Galactic Heist - Live Web App</h2>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">WebSocket</span>
+                        <span class="tag">Real-time</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/Galactic Heist/Galactic_Heist_FrontPage.png" alt="Galactic Heist Web App" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            A dynamic web application with real-time interactions and live updating challenges. Features multiplayer elements and live data synchronization for an engaging user experience.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Real-time Synchronization:</strong> Implemented WebSocket connections for live player interactions and challenge updates across multiple users simultaneously.</li>
+                                <li><strong>Multiplayer Architecture:</strong> Built scalable server infrastructure to handle concurrent players with low-latency communication and state management.</li>
+                                <li><strong>Dynamic Content:</strong> Created a flexible content system that updates challenges and interactions in real-time based on player actions.</li>
+                                <li><strong>Performance Optimization:</strong> Optimized data transfer and rendering to ensure smooth gameplay even with multiple active challenges.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="galactic-heist">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Game Project 2 -->
+            <article class="project-detail" data-category="game">
+                <div class="project-header">
+                    <h2 class="project-title">HDB Cats - 3D Tower Defense</h2>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">3D</span>
+                        <span class="tag">Strategy</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/HDB Cats/HDB_Cats_TN.png" alt="HDB Cats Tower Defense" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            A strategic 3D tower defense game set in Singapore's HDB environment. Players defend their neighborhood using various cat units with unique abilities and strategic positioning.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// ENGINEERING_REPORT</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>3D Pathfinding:</strong> Implemented optimized A* pathfinding for enemy units navigating through 3D HDB environments with multiple elevation levels.</li>
+                                <li><strong>Tower System:</strong> Created a flexible tower placement and upgrade system allowing for diverse cat unit types with unique abilities and range mechanics.</li>
+                                <li><strong>Wave Management:</strong> Designed a scalable wave spawning system with dynamic difficulty progression and enemy variety.</li>
+                                <li><strong>Performance:</strong> Optimized for mobile devices with object pooling and LOD systems to maintain 60fps with hundreds of active units.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="hdb-cats">> View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Web Project 3 -->
+            <article class="project-detail" data-category="web fullstack">
+                <div class="project-header">
+                    <h2 class="project-title">Stock Sensei - Financial Education</h2>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Charts</span>
+                        <span class="tag">Education</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/StockSensei/StockSensei_TN.png" alt="Stock Sensei Platform" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            An educational platform designed to make stock market learning accessible and fun. Features interactive lessons, real-time market data, and gamified learning experiences to help beginners understand investing.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Gamified Learning:</strong> Created an engaging educational system that breaks down complex financial concepts into digestible, interactive lessons.</li>
+                                <li><strong>Real-time Data:</strong> Integrated financial data APIs to provide live market information and help users learn with real-world examples.</li>
+                                <li><strong>Progressive Learning:</strong> Designed a curriculum path that adapts to user knowledge level, starting from basics and progressing to advanced strategies.</li>
+                                <li><strong>Visual Analytics:</strong> Built interactive charts and visualizations using Chart.js to help users understand market trends and patterns.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="stock-sensei">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Web Project 4 -->
+            <article class="project-detail" data-category="web fullstack">
+                <div class="project-header">
+                    <h2 class="project-title">Avise - Personal Financial Advisor</h2>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Finance</span>
+                        <span class="tag">PWA</span>
+                        <span class="tag">Charts</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/Avise/Avise_TN.png" alt="Avise Financial Advisor" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            A personal finance tracking application designed to help manage finances and stay on track with financial goals. Features budgeting tools, expense tracking, and financial insights with a privacy-first approach.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Privacy-Focused Design:</strong> Implemented local storage for all financial data, ensuring user privacy while maintaining full functionality offline.</li>
+                                <li><strong>Expense Categorization:</strong> Built intelligent categorization system that learns from user behavior to automatically organize expenses.</li>
+                                <li><strong>Budget Tracking:</strong> Created real-time budget monitoring with visual alerts and recommendations to help users stay on track.</li>
+                                <li><strong>Progressive Web App:</strong> Developed as a PWA for offline functionality and native app-like experience on mobile devices.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="avise-financial">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Web Project 6 - GAS Automated System -->
+            <article class="project-detail" data-category="web fullstack">
+                <div class="project-header">
+                    <h2 class="project-title">Automated Form Management System</h2>
+                    <div class="project-tags">
+                        <span class="tag">Google Apps Script</span>
+                        <span class="tag">HTML/CSS/JS</span>
+                        <span class="tag">Google Workspace</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/GAS_Automated_System/Automated_System_TN.png" alt="GAS Automated System Dashboard" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            A complete internal web app for managing corporate indemnity forms using Google Apps Script. The system automates form creation, tracking, and maintenance through a modern HTML/JS interface connected to Google Workspace APIs.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Google Workspace Integration:</strong> Leveraged FormApp, SpreadsheetApp, and DriveApp APIs to create seamless form generation and management workflows.</li>
+                                <li><strong>Template System:</strong> Built dynamic form generation from templates with unique system codes, automatic linking to master spreadsheets, and QR code generation.</li>
+                                <li><strong>Real-time UI:</strong> Implemented asynchronous client-server communication using google.script.run for responsive user interactions and live feedback.</li>
+                                <li><strong>Data Integrity:</strong> Created admin tools for orphaned-data cleanup and registry validation to ensure long-term data consistency across corporate clients.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="gas-automated-system">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-detail" data-category="web fullstack">
+                <div class="project-header">
+                    <h2 class="project-title">Sonova - Album Cover Marketplace</h2>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">Stripe</span>
+                        <span class="tag">E-Commerce</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/Sonova/Sonova_TN.png" alt="Sonova Album Cover Marketplace" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            An e-commerce platform for premium custom album cover artwork. Artists and producers can browse, purchase, and license digital album covers with instant delivery and commercial licensing included.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Stripe Integration:</strong> Implemented secure Stripe Checkout Sessions with server-side session creation for PCI-compliant payment processing and automatic order verification.</li>
+                                <li><strong>Custom Upload System:</strong> Built drag-and-drop artwork upload with auto-crop to square format, quality warnings for low-resolution images, and optional title/artist overlay preview.</li>
+                                <li><strong>E-Commerce Architecture:</strong> Created shopping cart with persistent local storage, real-time cart badge notifications, and coupon support with secure validation.</li>
+                                <li><strong>Interactive UX:</strong> Implemented 3D hover effects on album cards, carousel navigation with touch optimization, skeleton screens, and toast notifications for seamless user experience.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="sonova">> View Details</button>
+                            <a href="#" target="_blank" class="btn-secondary">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Game Project 3 -->
+            <article class="project-detail" data-category="game">
+                <div class="project-header">
+                    <h2 class="project-title">2D Platformer & Minigames Collection</h2>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">2D</span>
+                        <span class="tag">Mobile</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/TG_2D_Games/2D games TN.png" alt="2D Games Collection" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            A collection of 5 engaging 2D minigames created during internship, showcasing diverse gameplay mechanics and polished game design. Features Hexa, Hide, Hoops, Lava, and Press - each with unique challenges.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// ENGINEERING_REPORT</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Modular Architecture:</strong> Designed a flexible framework allowing for rapid prototyping and development of multiple game types within tight internship timelines.</li>
+                                <li><strong>Touch Controls:</strong> Implemented intuitive mobile controls optimized for each game's unique mechanics, ensuring smooth gameplay on touchscreen devices.</li>
+                                <li><strong>Polish & Feel:</strong> Focused on game feel with particle effects, screen shake, audio feedback, and visual polish to create engaging player experiences.</li>
+                                <li><strong>Performance:</strong> Optimized all games for mobile devices using object pooling, efficient sprite management, and frame-rate optimization techniques.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="2d-platformer">> View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Game Project 4 -->
+            <article class="project-detail" data-category="game">
+                <div class="project-header">
+                    <h2 class="project-title">Among Us Endless Runner</h2>
+                    <div class="project-tags">
+                        <span class="tag">Unreal Engine</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">Blueprint</span>
+                        <span class="tag">3D</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/Unreal_AmongUs/AmongUs_TN.png" alt="Among Us Endless Runner" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            A fast-paced endless runner game built in Unreal Engine, inspired by Among Us and Temple Run. Features dynamic obstacle generation, power-ups, and increasing difficulty for addictive gameplay.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// ENGINEERING_REPORT</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Procedural Generation:</strong> Implemented dynamic level generation system that creates endless corridors with varying obstacles and difficulty scaling.</li>
+                                <li><strong>Character Movement:</strong> Developed smooth character controller with lane-switching, jumping, and sliding mechanics optimized for fast-paced gameplay.</li>
+                                <li><strong>Blueprint Integration:</strong> Combined C++ core systems with Blueprint visual scripting for rapid iteration and designer-friendly gameplay tweaking.</li>
+                                <li><strong>Performance Optimization:</strong> Used object pooling and level streaming to maintain consistent 60fps performance even with complex 3D environments.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="among-us-runner">> View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title" class="modal-title">Project Details</h2>
+                <button class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main" id="modal-media-container">
+                        <img id="modal-main-image" src="" alt="Project screenshot" class="modal-image" style="display: none;">
+                        <div class="gallery-thumbnails" id="modal-thumbnails">
+                            <!-- Media will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <div class="modal-description" id="modal-description">
+                        <!-- Description will be populated by JavaScript -->
+                    </div>
+                    <div class="modal-features" id="modal-features">
+                        <!-- Features will be populated by JavaScript -->
+                    </div>
+                    <div class="modal-tech" id="modal-tech">
+                        <!-- Tech stack will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary modal-close">Close</button>
+                <a href="#" id="modal-demo-link" class="btn-primary" target="_blank">View Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="mono">© 2025 Isaac.dev // Crafted with precision</p>
+                <div class="footer-links">
+                    <a href="https://github.com" target="_blank" class="footer-link">GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" class="footer-link">LinkedIn</a>
+                    <a href="mailto:contact@example.com" class="footer-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

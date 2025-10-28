@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isaac // Developer Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Command Line Opener -->
+    <div id="terminal-loader" class="terminal-loader active">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+            </div>
+            <div class="terminal-body">
+                <div id="terminal-output"></div>
+                <span class="cursor-blink">_</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo">ISAAC<span class="fuchsia">.DEV</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">// HOME</a></li>
+                <li><a href="about.html" class="nav-link">// ABOUT</a></li>
+                <li><a href="projects.html" class="nav-link">// PROJECTS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="title-line">Developer</span>
+                        <span class="title-line">Architect</span>
+                        <span class="title-line">Creator</span>
+                    </h1>
+                    <p class="hero-subtitle">Building digital experiences through code, design, and interactive narratives.</p>
+                    <div class="hero-cta">
+                        <a href="projects.html" class="btn-primary">View Projects</a>
+                        <a href="about.html" class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rotating Showcase Banner -->
+    <section class="showcase-banner">
+        <div class="container">
+            <h2 class="section-title">// FEATURED_WORK</h2>
+            <div class="banner-slider">
+                <div class="banner-track">
+                    <div class="banner-slide active">
+                        <div class="banner-image">
+                            <img src="images/CHIKIA/Chikia_TN.png" alt="CHIKIA Story-Based Adventure">
+                        </div>
+                        <div class="banner-info">
+                            <h3>CHIKIA - Story-Based Adventure</h3>
+                            <p class="mono">Engine: Unity | C# | Narrative Design</p>
+                            <p>An immersive story-driven game featuring multiple minigames and interactive narratives. Players explore different worlds while engaging in various challenges.</p>
+                        </div>
+                    </div>
+                    <div class="banner-slide">
+                        <div class="banner-image">
+                            <img src="images/Sonova/Sonova_TN.png" alt="Sonova Album Cover Marketplace">
+                        </div>
+                        <div class="banner-info">
+                            <h3>Sonova - Album Cover Marketplace</h3>
+                            <p class="mono">Stack: React + TypeScript | Stripe | E-Commerce</p>
+                            <p>Premium e-commerce platform for album cover artwork with instant delivery, commercial licensing, and custom upload service.</p>
+                        </div>
+                    </div>
+                    <div class="banner-slide">
+                        <div class="banner-image">
+                            <img src="images/HDB Cats/HDB_Cats_TN.png" alt="HDB Cats Tower Defense">
+                        </div>
+                        <div class="banner-info">
+                            <h3>HDB Cats - 3D Tower Defense</h3>
+                            <p class="mono">Engine: Unity | C# | Strategy | 3D</p>
+                            <p>Strategic tower defense game set in Singapore's HDB environment. Defend your neighborhood using various cat units with unique abilities.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-controls">
+                    <button class="banner-btn prev" aria-label="Previous">‹</button>
+                    <div class="banner-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <button class="banner-btn next" aria-label="Next">›</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Grid -->
+    <section class="skills-section">
+        <div class="container">
+            <h2 class="section-title">// TECH_STACK</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">{'{ }'}</div>
+                    <h3>Web Development</h3>
+                    <ul class="skill-list">
+                        <li>JavaScript / TypeScript</li>
+                        <li>React / Vue / Angular</li>
+                        <li>Node.js / Express</li>
+                        <li>HTML5 / CSS3 / SASS</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">[ ]</div>
+                    <h3>Game Development</h3>
+                    <ul class="skill-list">
+                        <li>Unity / Unreal Engine</li>
+                        <li>C# / C++</li>
+                        <li>Custom Shaders</li>
+                        <li>Game Architecture</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">&lt;/&gt;</div>
+                    <h3>Tools & Workflow</h3>
+                    <ul class="skill-list">
+                        <li>Git / GitHub</li>
+                        <li>Docker / CI/CD</li>
+                        <li>Agile / Scrum</li>
+                        <li>VS Code / Visual Studio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Projects Preview -->
+    <section class="preview-section">
+        <div class="container">
+            <h2 class="section-title">// RECENT_PROJECTS</h2>
+            <div class="projects-grid">
+                <article class="project-preview">
+                    <div class="project-thumbnail">
+                        <img src="images/Sonova/Sonova_TN.png" alt="Sonova Album Cover Marketplace" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="project-meta">
+                        <h3>Sonova - E-Commerce</h3>
+                        <p class="mono">React • TypeScript • Stripe</p>
+                        <a href="projects.html" class="project-link">View Details →</a>
+                    </div>
+                </article>
+                <article class="project-preview">
+                    <div class="project-thumbnail">
+                        <img src="images/HDB Cats/HDB_Cats_TN.png" alt="HDB Cats Tower Defense" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="project-meta">
+                        <h3>HDB Cats - Tower Defense</h3>
+                        <p class="mono">Unity • C# • Strategy</p>
+                        <a href="projects.html" class="project-link">View Details →</a>
+                    </div>
+                </article>
+                <article class="project-preview">
+                    <div class="project-thumbnail">
+                        <img src="images/Galactic Heist/Galactic_Heist_FrontPage.png" alt="Galactic Heist Web App" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="project-meta">
+                        <h3>Galactic Heist</h3>
+                        <p class="mono">React • Node.js • WebSocket</p>
+                        <a href="projects.html" class="project-link">View Details →</a>
+                    </div>
+                </article>
+                <article class="project-preview">
+                    <div class="project-thumbnail">
+                        <img src="images/ZYPHER/ZYPHER_TN.png" alt="ZYPHER E-Bike Landing Page" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="project-meta">
+                        <h3>ZYPHER E-Bike</h3>
+                        <p class="mono">HTML5 • Three.js • WebGL</p>
+                        <a href="projects.html" class="project-link">View Details →</a>
+                    </div>
+                </article>
+                <article class="project-preview">
+                    <div class="project-thumbnail">
+                        <img src="images/StockSensei/StockSensei_TN.png" alt="Stock Sensei Platform" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="project-meta">
+                        <h3>Stock Sensei</h3>
+                        <p class="mono">React • Financial APIs • Education</p>
+                        <a href="projects.html" class="project-link">View Details →</a>
+                    </div>
+                </article>
+                <article class="project-preview">
+                    <div class="project-thumbnail">
+                        <img src="images/Avise/Avise_TN.png" alt="Avise Financial Advisor" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="project-meta">
+                        <h3>Avise Financial</h3>
+                        <p class="mono">React • PWA • Finance</p>
+                        <a href="projects.html" class="project-link">View Details →</a>
+                    </div>
+                </article>
+            </div>
+            <div class="section-cta">
+                <a href="projects.html" class="btn-primary">Explore All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="mono">© 2025 Isaac.dev // Crafted with precision</p>
+                <div class="footer-links">
+                    <a href="https://github.com" target="_blank" class="footer-link">GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" class="footer-link">LinkedIn</a>
+                    <a href="mailto:contact@example.com" class="footer-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 // Error</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo">ISAAC<span class="fuchsia">.DEV</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">// HOME</a></li>
+                <li><a href="about.html" class="nav-link">// ABOUT</a></li>
+                <li><a href="projects.html" class="nav-link">// PROJECTS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 404 Error Section -->
+    <section class="error-section">
+        <div class="container">
+            <div class="error-content">
+                <div class="error-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-title">system_error.log</span>
+                    </div>
+                    <div class="terminal-body error-body">
+                        <pre class="error-output">
+<span class="error-line">[ERROR] SYSTEM_FAULT_DETECTED</span>
+<span class="error-line">─────────────────────────────────────────</span>
+<span class="error-line">Status Code: <span class="fuchsia">404</span></span>
+<span class="error-line">Error Type:  <span class="fuchsia">RESOURCE_NOT_FOUND</span></span>
+<span class="error-line">Timestamp:   <span class="fuchsia" id="error-timestamp"></span></span>
+<span class="error-line">Location:    <span class="fuchsia" id="error-location"></span></span>
+<span class="error-line">─────────────────────────────────────────</span>
+<span class="error-line"></span>
+<span class="error-line">DIAGNOSTIC:</span>
+<span class="error-line">  The requested resource could not be</span>
+<span class="error-line">  located in the system architecture.</span>
+<span class="error-line">  Data stream corrupted or path invalid.</span>
+<span class="error-line"></span>
+<span class="error-line">SUGGESTED ACTIONS:</span>
+<span class="error-line">  > Verify request parameters</span>
+<span class="error-line">  > Return to main navigation</span>
+<span class="error-line">  > Execute system recovery protocol</span>
+<span class="error-line"></span>
+<span class="error-line blink">_</span>
+                        </pre>
+                    </div>
+                </div>
+                
+                <div class="error-actions">
+                    <h2 class="error-title">// RECOVERY_OPTIONS</h2>
+                    <p class="error-message">The page you're looking for has been moved, deleted, or never existed.</p>
+                    <div class="error-buttons">
+                        <a href="index.html" class="btn-primary">Return Home</a>
+                        <a href="projects.html" class="btn-secondary">View Projects</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="mono">© 2025 Isaac.dev // Crafted with precision</p>
+                <div class="footer-links">
+                    <a href="https://github.com" target="_blank" class="footer-link">GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" class="footer-link">LinkedIn</a>
+                    <a href="mailto:contact@example.com" class="footer-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Update error timestamp and location
+        document.getElementById('error-timestamp').textContent = new Date().toISOString();
+        document.getElementById('error-location').textContent = window.location.pathname;
+    </script>
+</body>
+</html>
+
