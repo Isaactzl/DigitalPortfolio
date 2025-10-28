@@ -56,8 +56,8 @@ function initTerminalLoader() {
     setTimeout(typeCommand, 300);
 }
 
-// Run terminal loader only on home page
-if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+// Run terminal loader when the loader element exists (works on GitHub Pages subpaths)
+if (document.getElementById('terminal-loader')) {
     window.addEventListener('load', initTerminalLoader);
 }
 
