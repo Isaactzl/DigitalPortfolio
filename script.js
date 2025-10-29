@@ -474,7 +474,7 @@ const projectData = {
         images: [
             { src: 'images/ZYPHER/ZYPHER_TN.png', alt: 'Main landing page with 3D model' }
         ],
-        youtubeVideo: 'https://www.youtube.com/embed/vGXYsxc0vRo',
+        youtubeVideo: 'https://www.youtube.com/embed/v_PU21hG4OA',
         features: [
             'Interactive 3D bike model',
             'Smooth scroll animations',
@@ -491,7 +491,7 @@ const projectData = {
             'Responsive design',
             'WebGL optimization'
         ],
-        demoUrl: 'https://youtu.be/vGXYsxc0vRo'
+        demoUrl: 'https://youtu.be/v_PU21hG4OA'
     },
     'chikia': {
         title: 'CHIKIA - Story-Based Adventure',
@@ -649,7 +649,7 @@ const projectData = {
         images: [
             { src: 'images/Sonova/Sonova_TN.png', alt: 'Sonova Album Cover Marketplace' }
         ],
-        youtubeVideo: 'https://www.youtube.com/embed/CryBO-td0vQ',
+        youtubeVideo: 'https://www.youtube.com/embed/4HQdmC3X6iw',
         features: [
             'Browse and purchase digital album covers',
             'Instant delivery and commercial licensing',
@@ -666,7 +666,7 @@ const projectData = {
             'Tailwind CSS styling',
             'Vite build tool'
         ],
-        demoUrl: 'https://youtu.be/CryBO-td0vQ'
+        demoUrl: 'https://youtu.be/4HQdmC3X6iw'
     },
     '2d-platformer': {
         title: '2D Platformer & Minigames Collection',
