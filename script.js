@@ -549,7 +549,7 @@ const projectData = {
         images: [
             { src: 'images/HDB Cats/HDB_Cats_TN.png', alt: 'Tower defense gameplay' }
         ],
-        youtubeVideo: 'https://www.youtube.com/embed/6McchUiTS6A',
+        youtubeVideo: 'https://www.youtube.com/embed/dtA3vYOva8c',
         features: [
             '3D tower defense mechanics',
             'Multiple cat unit types',
@@ -566,7 +566,7 @@ const projectData = {
             'Particle effects',
             'Audio system integration'
         ],
-        demoUrl: 'https://youtu.be/6McchUiTS6A'
+        demoUrl: 'https://youtu.be/dtA3vYOva8c'
     },
     'stock-sensei': {
         title: 'Stock Sensei - Financial Education',
