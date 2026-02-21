@@ -738,16 +738,32 @@ function initProjectModal() {
 
     if (!modal) return;
 
+    let currentModalProject = null;
+
+    function stopModalMedia() {
+        const mediaContainer = document.getElementById('modal-media-container');
+        if (!mediaContainer) return;
+        mediaContainer.querySelectorAll('iframe.modal-video').forEach(iframe => {
+            iframe.src = 'about:blank';
+        });
+        mediaContainer.querySelectorAll('video.modal-video').forEach(video => {
+            video.pause();
+            video.currentTime = 0;
+        });
+    }
+
     // Open modal
     detailButtons.forEach(button => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            if (button.tagName === 'A') e.preventDefault();
             const projectId = button.getAttribute('data-project');
             const project = projectData[projectId];
             
             if (project) {
+                currentModalProject = project;
                 modalTitle.textContent = project.title;
                 modalDescription.textContent = project.description;
-                modalDemoLink.href = project.demoUrl;
+                modalDemoLink.href = project.demoUrl || '#';
                 
                 // Set main image or video
                 const mediaContainer = document.getElementById('modal-media-container');
@@ -881,28 +897,43 @@ function initProjectModal() {
         });
     });
 
-    // Close modal
+    // View Demo: play the project's video in the modal (instead of opening external link)
+    modalDemoLink.addEventListener('click', (e) => {
+        if (!currentModalProject) return;
+        const project = currentModalProject;
+        const mediaContainer = document.getElementById('modal-media-container');
+        const iframe = mediaContainer && mediaContainer.querySelector('iframe.modal-video');
+        const videoEl = mediaContainer && mediaContainer.querySelector('video.modal-video');
+        if (iframe && (project.youtubeVideo || (project.youtubeVideos && project.youtubeVideos.length > 0))) {
+            e.preventDefault();
+            const currentSrc = iframe.src;
+            if (currentSrc && currentSrc !== 'about:blank') {
+                const sep = currentSrc.includes('?') ? '&' : '?';
+                iframe.src = currentSrc.split('#')[0] + sep + 'autoplay=1';
+            }
+        } else if (videoEl && project.videoUrl) {
+            e.preventDefault();
+            videoEl.play();
+        }
+    });
+
+    // Close modal and stop any playing video
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        stopModalMedia();
+    }
+
     closeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+        button.addEventListener('click', closeModal);
     });
 
-    // Close on backdrop click
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+        if (e.target === modal) closeModal();
     });
 
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
 }
 
