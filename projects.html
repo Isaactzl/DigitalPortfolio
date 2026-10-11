@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects // Isaac Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=portfolio-20261011-4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
     <section class="page-hero">
         <div class="container">
             <h1 class="page-title">// PROJECT_ARCHIVE</h1>
-            <p class="page-subtitle mono">A Collection of Digital Creations</p>
+            <p class="page-subtitle mono">Selected work in automation, game logic, and interactive software</p>
         </div>
     </section>
 
@@ -261,8 +261,8 @@
                 </div>
             </article>
 
-            <!-- Web Project 6 - GAS Automated System -->
-            <article class="project-detail" data-category="web fullstack">
+            <!-- Internship project - automated form management -->
+            <article class="project-detail" id="automated-form-management" data-category="web fullstack">
                 <div class="project-header">
                     <h2 class="project-title">Automated Form Management System</h2>
                     <div class="project-tags">
@@ -278,20 +278,83 @@
                     </div>
                     <div class="project-info">
                         <p class="project-description">
-                            A complete internal web app for managing corporate indemnity forms using Google Apps Script. The system automates form creation, tracking, and maintenance through a modern HTML/JS interface connected to Google Workspace APIs.
+                            <strong>Problem:</strong> Repeated form creation, tracking, and maintenance created avoidable manual work. <strong>Build:</strong> An internal web app using Google Apps Script, HTML/CSS/JavaScript, and Google Workspace APIs. <strong>Impact:</strong> Automated recurring form workflows and reduced manual handling, with validation and cleanup tools to support data consistency.
                         </p>
                         <div class="technical-breakdown">
-                            <h3 class="breakdown-title">// TECHNICAL_CHALLENGES</h3>
+                            <h3 class="breakdown-title">// IMPLEMENTATION</h3>
                             <ul class="breakdown-list">
-                                <li><strong>Google Workspace Integration:</strong> Leveraged FormApp, SpreadsheetApp, and DriveApp APIs to create seamless form generation and management workflows.</li>
-                                <li><strong>Template System:</strong> Built dynamic form generation from templates with unique system codes, automatic linking to master spreadsheets, and QR code generation.</li>
-                                <li><strong>Real-time UI:</strong> Implemented asynchronous client-server communication using google.script.run for responsive user interactions and live feedback.</li>
-                                <li><strong>Data Integrity:</strong> Created admin tools for orphaned-data cleanup and registry validation to ensure long-term data consistency across corporate clients.</li>
+                                <li><strong>Workspace integration:</strong> Connected Google Forms, Sheets, and Drive to support form generation and administration.</li>
+                                <li><strong>Workflow automation:</strong> Generated forms from templates with system codes, spreadsheet links, and QR codes.</li>
+                                <li><strong>Responsive interface:</strong> Used asynchronous client-server calls for search, permissions, and live feedback.</li>
+                                <li><strong>Data integrity:</strong> Added administrative cleanup and registry-validation tools.</li>
                             </ul>
                         </div>
                         <div class="project-links">
                             <button class="btn-primary project-detail-btn" data-project="gas-automated-system">> View Details</button>
                             <a href="#" class="btn-secondary project-detail-btn" data-project="gas-automated-system">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-detail" id="chrono-time-tinkerer" data-category="game">
+                <div class="project-header">
+                    <h2 class="project-title">Chrono Time Tinkerer</h2>
+                    <div class="project-tags">
+                        <span class="tag">C#</span>
+                        <span class="tag">Game Design</span>
+                        <span class="tag">Gameplay Logic</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <div class="project-artwork project-artwork--chrono" role="img" aria-label="Chrono Time Tinkerer project artwork">
+                            <span>CHRONO</span>
+                            <strong>Time Tinkerer</strong>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            <strong>Design challenge:</strong> Time-manipulation mechanics need clear rules and consistent gameplay behavior. <strong>Build:</strong> A game-design project supported by C# logic and time-manipulation scripting. <strong>Outcome:</strong> Demonstrates translating a gameplay concept into structured, scripted behavior.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-detail" id="hardwood-hustle" data-category="web game">
+                <div class="project-header">
+                    <h2 class="project-title">Hardwood Hustle: The $25 GM</h2>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Framer Motion</span>
+                        <span class="tag">Vite</span>
+                        <span class="tag">In Progress</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-gallery">
+                        <img src="images/Hardwood%20Hustle/HH%20Main%20Page.png" alt="Hardwood Hustle: The $25 GM game landing page" class="gallery-main">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-description">
+                            <strong>Design goal:</strong> Turn NBA roster-building and player evaluation into a replayable, social draft game. <strong>Build:</strong> A React browser app with mobile-first local couch play for 2–8 general managers, timed player auctions, configurable budgets, and modern or all-time player pools. Frankenstein Mode builds one super-player by assigning eight player attributes; The Franchise drafts and assigns a five-player roster, with fit and synergy contributing to results.                             <strong>Outcome:</strong> A configurable multiplayer prototype combining player evaluation, auction strategy, and roster construction.
+                        </p>
+                        <div class="technical-breakdown">
+                            <h3 class="breakdown-title">// GAME_SYSTEMS</h3>
+                            <ul class="breakdown-list">
+                                <li><strong>Draft configuration:</strong> Set the number and names of couch GMs, starting budget, game mode, and player era.</li>
+                                <li><strong>Live auction loop:</strong> Run timed player bidding with budget-aware picks and tie-break resolution.</li>
+                                <li><strong>Two roster challenges:</strong> Build an eight-attribute Frankenstein player or draft a five-player franchise roster with position-fit and synergy scoring.</li>
+                                <li><strong>Interface and motion:</strong> Built with React, Framer Motion, and Vite, with responsive play surfaces and animated auction feedback.</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <button class="btn-primary project-detail-btn" data-project="hardwood-hustle">> View Details</button>
+                            <a href="#" class="btn-secondary project-detail-btn" data-project="hardwood-hustle">View Gallery</a>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://isaactzl.github.io/NBA_GM_Game/" class="btn-primary" target="_blank" rel="noopener noreferrer">Play Live Demo</a>
+                            <a href="https://github.com/Isaactzl/NBA_GM_Game" class="btn-primary" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
                         </div>
                     </div>
                 </div>
@@ -414,7 +477,7 @@
             <div class="modal-body">
                 <div class="modal-gallery">
                     <div class="gallery-main" id="modal-media-container">
-                        <img id="modal-main-image" src="" alt="Project screenshot" class="modal-image" style="display: none;">
+                        <img id="modal-main-image" alt="Project screenshot" class="modal-image" style="display: none;">
                         <div class="gallery-thumbnails" id="modal-thumbnails">
                             <!-- Media will be populated by JavaScript -->
                         </div>
@@ -434,7 +497,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary modal-close">Close</button>
-                <a href="#" id="modal-demo-link" class="btn-primary" target="_blank">View Demo</a>
+                <a href="#" id="modal-demo-link" class="btn-primary" target="_blank" rel="noopener noreferrer">View Demo</a>
             </div>
         </div>
     </div>
@@ -445,15 +508,13 @@
             <div class="footer-content">
                 <p class="mono">© 2025 Isaac.dev // Crafted with precision</p>
                 <div class="footer-links">
-                    <a href="https://github.com" target="_blank" class="footer-link">GitHub</a>
+                    <a href="https://github.com/isaactzl" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
                     <a href="https://www.linkedin.com/in/isaac-tan-zl/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
-                    <a href="mailto:contact@example.com" class="footer-link">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=hh-gallery-5"></script>
 </body>
 </html>
-

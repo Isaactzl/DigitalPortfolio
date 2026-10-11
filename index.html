@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Isaac // Developer Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=portfolio-20261011-4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
 </head>
-<body>
+<body class="hero-page">
     <!-- Command Line Opener -->
     <div id="terminal-loader" class="terminal-loader active">
         <div class="terminal-container">
@@ -40,15 +41,31 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container">
+        <!-- Spline 3D Background -->
+        <div class="hero-bg">
+            <spline-viewer url="https://prod.spline.design/us3ALejTXl6usHZ7/scene.splinecode"></spline-viewer>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <!-- Floating Geometric Shapes -->
+        <div class="hero-shapes" aria-hidden="true">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="container" id="hero-content-wrapper">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        <span class="title-line">Developer</span>
-                        <span class="title-line">Architect</span>
-                        <span class="title-line">Creator</span>
+                        <span class="title-line">Software</span>
+                        <span class="title-line">Automation</span>
+                        <span class="title-line">Interactive Systems</span>
                     </h1>
-                    <p class="hero-subtitle">Building digital experiences through code, design, and interactive narratives.</p>
+                    <p class="hero-subtitle">I build practical software and interactive experiences with code, automation, and thoughtful system logic.</p>
                     <div class="hero-cta">
                         <a href="projects.html" class="btn-primary">View Projects</a>
                         <a href="about.html" class="btn-secondary">Learn More</a>
@@ -61,37 +78,40 @@
     <!-- Rotating Showcase Banner -->
     <section class="showcase-banner">
         <div class="container">
-            <h2 class="section-title">// FEATURED_WORK</h2>
+            <h2 class="section-title text-shimmer">// FEATURED_WORK</h2>
             <div class="banner-slider">
                 <div class="banner-track">
                     <div class="banner-slide active">
                         <div class="banner-image">
-                            <img src="images/CHIKIA/Chikia_TN.png" alt="CHIKIA Story-Based Adventure">
+                            <img src="images/GAS_Automated_System/Automated_System_TN.png" alt="Automated Form Management System dashboard">
                         </div>
                         <div class="banner-info">
-                            <h3>CHIKIA - Story-Based Adventure</h3>
-                            <p class="mono">Engine: Unity | C# | Narrative Design</p>
-                            <p>An immersive story-driven game featuring multiple minigames and interactive narratives. Players explore different worlds while engaging in various challenges.</p>
+                            <h3>Automated Form Management System</h3>
+                            <p class="mono">Google Apps Script | JavaScript | Workspace APIs</p>
+                            <p><strong>Problem:</strong> Repetitive form creation and tracking took manual effort. <strong>Build:</strong> An internal web tool that automates form generation and administration. <strong>Impact:</strong> Reduced repetitive handling and supported more consistent data management.</p>
                         </div>
                     </div>
                     <div class="banner-slide">
                         <div class="banner-image">
-                            <img src="images/Sonova/Sonova_TN.png" alt="Sonova Album Cover Marketplace">
+                            <div class="project-artwork project-artwork--chrono" role="img" aria-label="Chrono Time Tinkerer project artwork">
+                                <span>CHRONO</span>
+                                <strong>Time Tinkerer</strong>
+                            </div>
                         </div>
                         <div class="banner-info">
-                            <h3>Sonova - Album Cover Marketplace</h3>
-                            <p class="mono">Stack: React + TypeScript | Stripe | E-Commerce</p>
-                            <p>Premium e-commerce platform for album cover artwork with instant delivery, commercial licensing, and custom upload service.</p>
+                            <h3>Chrono Time Tinkerer</h3>
+                            <p class="mono">Game Design | C# Logic</p>
+                            <p><strong>Problem:</strong> Time-manipulation mechanics need clear, consistent rules. <strong>Build:</strong> Game design work supported by C# logic. <strong>Impact:</strong> Demonstrates translating a gameplay concept into scripted behavior.</p>
                         </div>
                     </div>
                     <div class="banner-slide">
                         <div class="banner-image">
-                            <img src="images/HDB Cats/HDB_Cats_TN.png" alt="HDB Cats Tower Defense">
+                            <img src="images/Hardwood%20Hustle/HH%20Main%20Page.png" alt="Hardwood Hustle: The $25 GM game landing page">
                         </div>
                         <div class="banner-info">
-                            <h3>HDB Cats - 3D Tower Defense</h3>
-                            <p class="mono">Engine: Unity | C# | Strategy | 3D</p>
-                            <p>Strategic tower defense game set in Singapore's HDB environment. Defend your neighborhood using various cat units with unique abilities.</p>
+                            <h3>Hardwood Hustle: The $25 GM</h3>
+                            <p class="mono">React | Framer Motion | Vite | In progress</p>
+                            <p>A local, mobile-first NBA draft game for 2–8 couch GMs. Choose timed player-auction drafts, modern or all-time player pools, and either build a super-player from eight attributes or assemble a five-player franchise roster.</p>
                         </div>
                     </div>
                 </div>
@@ -111,26 +131,26 @@
     <!-- Skills Grid -->
     <section class="skills-section">
         <div class="container">
-            <h2 class="section-title">// TECH_STACK</h2>
+            <h2 class="section-title text-shimmer">// TECH_STACK</h2>
             <div class="skills-grid">
                 <div class="skill-card">
                     <div class="skill-icon">{'{ }'}</div>
                     <h3>Web Development</h3>
                     <ul class="skill-list">
-                        <li>JavaScript / TypeScript</li>
-                        <li>React / Vue / Angular</li>
-                        <li>Node.js / Express</li>
-                        <li>HTML5 / CSS3 / SASS</li>
+                        <li>JavaScript</li>
+                        <li>HTML / CSS</li>
+                        <li>Web APIs</li>
+                        <li>SQL</li>
                     </ul>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">[ ]</div>
                     <h3>Game Development</h3>
                     <ul class="skill-list">
-                        <li>Unity / Unreal Engine</li>
-                        <li>C# / C++</li>
-                        <li>Custom Shaders</li>
-                        <li>Game Architecture</li>
+                        <li>Unity</li>
+                        <li>C# gameplay logic</li>
+                        <li>Luau scripting</li>
+                        <li>Interactive prototyping</li>
                     </ul>
                 </div>
                 <div class="skill-card">
@@ -138,8 +158,9 @@
                     <h3>Tools & Workflow</h3>
                     <ul class="skill-list">
                         <li>Git / GitHub</li>
-                        <li>Docker / CI/CD</li>
-                        <li>Agile / Scrum</li>
+                        <li>Process automation</li>
+                        <li>AI-assisted prototyping</li>
+                        <li>Manual debugging</li>
                         <li>VS Code / Visual Studio</li>
                     </ul>
                 </div>
@@ -150,68 +171,87 @@
     <!-- Quick Projects Preview -->
     <section class="preview-section">
         <div class="container">
-            <h2 class="section-title">// RECENT_PROJECTS</h2>
-            <div class="projects-grid">
-                <article class="project-preview">
-                    <div class="project-thumbnail">
-                        <img src="images/Sonova/Sonova_TN.png" alt="Sonova Album Cover Marketplace" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+            <h2 class="section-title text-shimmer">// RECENT_PROJECTS</h2>
+            <div class="bento-grid">
+                <!-- Internship automation — span 2 -->
+                <div class="bento-card bento-card--span2">
+                    <div class="bento-card-bg">
+                        <img src="images/GAS_Automated_System/Automated_System_TN.png" alt="Automated Form Management System dashboard" loading="lazy">
                     </div>
-                    <div class="project-meta">
-                        <h3>Sonova - E-Commerce</h3>
-                        <p class="mono">React • TypeScript • Stripe</p>
-                        <a href="projects.html" class="project-link">View Details →</a>
+                    <div class="bento-card-content">
+                        <span class="bento-card-stack">Google Apps Script • JavaScript • Workspace APIs</span>
+                        <h3 class="bento-card-title">Automated Form Management System</h3>
                     </div>
-                </article>
-                <article class="project-preview">
-                    <div class="project-thumbnail">
-                        <img src="images/HDB Cats/HDB_Cats_TN.png" alt="HDB Cats Tower Defense" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    <div class="bento-card-cta">
+                        <a href="projects.html#automated-form-management" class="bento-card-link">View Details →</a>
                     </div>
-                    <div class="project-meta">
-                        <h3>HDB Cats - Tower Defense</h3>
-                        <p class="mono">Unity • C# • Strategy</p>
-                        <a href="projects.html" class="project-link">View Details →</a>
+                </div>
+                <!-- Chrono Time Tinkerer — span 1 -->
+                <div class="bento-card">
+                    <div class="bento-card-bg">
+                        <div class="project-artwork project-artwork--chrono" aria-hidden="true"><span>CHRONO</span><strong>Time Tinkerer</strong></div>
                     </div>
-                </article>
-                <article class="project-preview">
-                    <div class="project-thumbnail">
-                        <img src="images/Galactic Heist/Galactic_Heist_FrontPage.png" alt="Galactic Heist Web App" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    <div class="bento-card-content">
+                        <span class="bento-card-stack">Game Design • C#</span>
+                        <h3 class="bento-card-title">Chrono Time Tinkerer</h3>
                     </div>
-                    <div class="project-meta">
-                        <h3>Galactic Heist</h3>
-                        <p class="mono">React • Node.js • WebSocket</p>
-                        <a href="projects.html" class="project-link">View Details →</a>
+                    <div class="bento-card-cta">
+                        <a href="projects.html#chrono-time-tinkerer" class="bento-card-link">View Details →</a>
                     </div>
-                </article>
-                <article class="project-preview">
-                    <div class="project-thumbnail">
-                        <img src="images/ZYPHER/ZYPHER_TN.png" alt="ZYPHER E-Bike Landing Page" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                </div>
+                <!-- Hardwood Hustle — span 1 -->
+                <div class="bento-card">
+                    <div class="bento-card-bg">
+                        <img src="images/Hardwood%20Hustle/HH%20Main%20Page.png" alt="Hardwood Hustle: The $25 GM game landing page" loading="lazy">
                     </div>
-                    <div class="project-meta">
-                        <h3>ZYPHER E-Bike</h3>
-                        <p class="mono">HTML5 • Three.js • WebGL</p>
-                        <a href="projects.html" class="project-link">View Details →</a>
+                    <div class="bento-card-content">
+                        <span class="bento-card-stack">React • Framer Motion • In progress</span>
+                        <h3 class="bento-card-title">Hardwood Hustle: The $25 GM</h3>
                     </div>
-                </article>
-                <article class="project-preview">
-                    <div class="project-thumbnail">
-                        <img src="images/StockSensei/StockSensei_TN.png" alt="Stock Sensei Platform" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    <div class="bento-card-cta">
+                        <a href="projects.html#hardwood-hustle" class="bento-card-link">View Details →</a>
                     </div>
-                    <div class="project-meta">
-                        <h3>Stock Sensei</h3>
-                        <p class="mono">React • Financial APIs • Education</p>
-                        <a href="projects.html" class="project-link">View Details →</a>
+                </div>
+                <!-- ZYPHER — span 2 -->
+                <div class="bento-card bento-card--span2">
+                    <div class="bento-card-bg">
+                        <img src="images/ZYPHER/ZYPHER_TN.png" alt="ZYPHER E-Bike Landing Page" loading="lazy">
                     </div>
-                </article>
-                <article class="project-preview">
-                    <div class="project-thumbnail">
-                        <img src="images/Avise/Avise_TN.png" alt="Avise Financial Advisor" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                    <div class="bento-card-content">
+                        <span class="bento-card-stack">HTML5 • Three.js • WebGL</span>
+                        <h3 class="bento-card-title">ZYPHER — E-Bike Landing Page</h3>
                     </div>
-                    <div class="project-meta">
-                        <h3>Avise Financial</h3>
-                        <p class="mono">React • PWA • Finance</p>
-                        <a href="projects.html" class="project-link">View Details →</a>
+                    <div class="bento-card-cta">
+                        <a href="projects.html" class="bento-card-link">View Details →</a>
                     </div>
-                </article>
+                </div>
+                <!-- StockSensei — span 1 -->
+                <div class="bento-card">
+                    <div class="bento-card-bg">
+                        <img src="images/StockSensei/StockSensei_TN.png" alt="Stock Sensei Platform" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
+                        <span class="bento-card-stack">React • Financial APIs</span>
+                        <h3 class="bento-card-title">Stock Sensei</h3>
+                    </div>
+                    <div class="bento-card-cta">
+                        <a href="projects.html" class="bento-card-link">View Details →</a>
+                    </div>
+                </div>
+                <!-- Avise — span 2 -->
+                <div class="bento-card bento-card--span2">
+                    <div class="bento-card-bg">
+                        <img src="images/Avise/Avise_TN.png" alt="Avise Financial Advisor" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
+                        <span class="bento-card-stack">React • PWA • Finance</span>
+                        <h3 class="bento-card-title">Avise — Personal Financial Advisor</h3>
+                    </div>
+                    <div class="bento-card-cta">
+                        <a href="projects.html" class="bento-card-link">View Details →</a>
+                    </div>
+                </div>
+                <!-- Avise span 1 filler — removed, 6 cards fills 3 rows of 3 cols -->
             </div>
             <div class="section-cta">
                 <a href="projects.html" class="btn-primary">Explore All Projects</a>
@@ -225,15 +265,13 @@
             <div class="footer-content">
                 <p class="mono">© 2025 Isaac.dev // Crafted with precision</p>
                 <div class="footer-links">
-                    <a href="https://github.com" target="_blank" class="footer-link">GitHub</a>
+                    <a href="https://github.com/isaactzl" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
                     <a href="https://www.linkedin.com/in/isaac-tan-zl/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
-                    <a href="mailto:contact@example.com" class="footer-link">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=hh-gallery-5"></script>
 </body>
 </html>
-

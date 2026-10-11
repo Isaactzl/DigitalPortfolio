@@ -196,7 +196,7 @@ initProjectFilter();
 // ========================================
 // SMOOTH SCROLL FOR ANCHOR LINKS
 // ========================================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
@@ -210,6 +210,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ========================================
+// HERO SCROLL — FADE CONTENT + NAV SWITCH
+// ========================================
+function initHeroScroll() {
+    const heroWrapper = document.getElementById('hero-content-wrapper');
+    const nav = document.querySelector('.nav-container');
+    if (!document.body.classList.contains('hero-page')) return;
+
+    function onScroll() {
+        requestAnimationFrame(() => {
+            const scroll = window.pageYOffset;
+            if (heroWrapper) {
+                const maxFade = window.innerHeight * 0.4;
+                heroWrapper.style.opacity = String(Math.max(0, 1 - scroll / maxFade));
+            }
+            if (nav) {
+                nav.classList.toggle('nav--scrolled', scroll > 80);
+            }
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+}
+
+initHeroScroll();
+
+// ========================================
 // INTERSECTION OBSERVER FOR FADE-IN ANIMATIONS
 // ========================================
 function initScrollAnimations() {
@@ -217,7 +244,7 @@ function initScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -226,16 +253,16 @@ function initScrollAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observe elements
     const animatedElements = document.querySelectorAll(
-        '.skill-card, .project-preview, .spec-card, .timeline-item, .project-detail'
+        '.skill-card, .project-preview, .bento-card, .spec-card, .timeline-item, .project-detail'
     );
-    
+
     animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
-        el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        el.style.transition = `opacity 0.6s ease ${index * 0.08}s, transform 0.6s ease ${index * 0.08}s`;
         observer.observe(el);
     });
 }
@@ -248,7 +275,7 @@ setTimeout(initScrollAnimations, 100);
 // ========================================
 function initGlowEffect() {
     const cards = document.querySelectorAll(
-        '.skill-card, .project-preview, .spec-card, .project-detail'
+        '.skill-card, .project-preview, .bento-card, .spec-card, .project-detail'
     );
     
     cards.forEach(card => {
@@ -620,7 +647,7 @@ const projectData = {
     },
     'gas-automated-system': {
         title: 'Automated Form Management System',
-        description: 'A complete internal web app for managing corporate indemnity forms using Google Apps Script. The system automates form creation, tracking, and maintenance through a modern HTML/JS interface connected to Google Workspace APIs.',
+        description: 'Problem: Repeated form creation, tracking, and maintenance created avoidable manual work. Build: An internal web app using Google Apps Script, HTML/CSS/JavaScript, and Google Workspace APIs. Impact: Automated recurring form workflows and reduced manual handling, with validation and cleanup tools to support data consistency.',
         images: [
             { src: 'images/GAS_Automated_System/Automated_System_TN.png', alt: 'GAS Automated System Dashboard' }
         ],
@@ -723,6 +750,31 @@ const projectData = {
             'Unreal physics system'
         ],
         demoUrl: 'https://youtu.be/kE8gVUALtiI'
+    },
+    'hardwood-hustle': {
+        title: 'Hardwood Hustle: The $25 GM',
+        description: 'A mobile-first couch multiplayer NBA draft game for 2–8 general managers. Run timed player auctions, set budgets, and choose modern or all-time player pools. Frankenstein Mode builds one player from eight attributes; The Franchise drafts and assigns a five-player roster, with position fit and synergy contributing to the result.',
+        images: [
+            { src: 'images/Hardwood%20Hustle/HH%20Main%20Page.png', alt: 'Hardwood Hustle: The $25 GM game landing page' }
+        ],
+        videoUrl: 'images/Hardwood%20Hustle/HH%20Gameplay.mp4',
+        videoPoster: 'images/Hardwood%20Hustle/HH%20Main%20Page.png',
+        features: [
+            'Local couch play for 2–8 general managers',
+            'Timed player auctions with configurable budgets',
+            'Modern and all-time player pools',
+            'Frankenstein mode: build a player from eight attributes',
+            'Franchise mode: draft and position a five-player roster',
+            'Roster fit and synergy scoring'
+        ],
+        tech: [
+            'React',
+            'Framer Motion',
+            'Vite',
+            'JavaScript',
+            'Responsive web UI'
+        ],
+        demoUrl: 'https://isaactzl.github.io/NBA_GM_Game/'
     }
 }
 
@@ -730,8 +782,6 @@ function initProjectModal() {
     const modal = document.getElementById('project-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
-    const modalMainImage = document.getElementById('modal-main-image');
-    const modalThumbnails = document.getElementById('modal-thumbnails');
     const modalDemoLink = document.getElementById('modal-demo-link');
     const closeButtons = document.querySelectorAll('.modal-close');
     const detailButtons = document.querySelectorAll('.project-detail-btn');
@@ -828,7 +878,7 @@ function initProjectModal() {
                 // Handle single local video
                 else if (project.videoUrl) {
                     mediaContainer.innerHTML = `
-                        <video class="modal-video" controls><source src="${project.videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>
+                        <video class="modal-video" controls playsinline preload="metadata" ${project.videoPoster ? `poster="${project.videoPoster}"` : ''}><source src="${project.videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>
                         <div class="gallery-thumbnails" id="modal-thumbnails"></div>
                     `;
                 }
@@ -841,6 +891,7 @@ function initProjectModal() {
                 }
                 
                 // Create thumbnails (only if multiple images)
+                const modalThumbnails = mediaContainer.querySelector('#modal-thumbnails');
                 modalThumbnails.innerHTML = '';
                 if (project.images.length > 1) {
                     project.images.forEach((image, index) => {
@@ -897,13 +948,12 @@ function initProjectModal() {
         });
     });
 
-    // View Demo: play the project's video in the modal (instead of opening external link)
+    // Keep YouTube demos in the embedded player; local-video projects use this link for their live demo.
     modalDemoLink.addEventListener('click', (e) => {
         if (!currentModalProject) return;
         const project = currentModalProject;
         const mediaContainer = document.getElementById('modal-media-container');
         const iframe = mediaContainer && mediaContainer.querySelector('iframe.modal-video');
-        const videoEl = mediaContainer && mediaContainer.querySelector('video.modal-video');
         if (iframe && (project.youtubeVideo || (project.youtubeVideos && project.youtubeVideos.length > 0))) {
             e.preventDefault();
             const currentSrc = iframe.src;
@@ -911,9 +961,6 @@ function initProjectModal() {
                 const sep = currentSrc.includes('?') ? '&' : '?';
                 iframe.src = currentSrc.split('#')[0] + sep + 'autoplay=1';
             }
-        } else if (videoEl && project.videoUrl) {
-            e.preventDefault();
-            videoEl.play();
         }
     });
 
@@ -977,4 +1024,3 @@ if (typeof module !== 'undefined' && module.exports) {
         createParticleBackground
     };
 }
-
