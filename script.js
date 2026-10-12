@@ -152,39 +152,49 @@ function initProjectFilter() {
     const projects = document.querySelectorAll('.project-detail');
     
     if (filterBtns.length === 0 || projects.length === 0) return;
+
+    const hideTimers = new Map();
+    let activeFilter = 'all';
     
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const filter = btn.getAttribute('data-filter');
+            if (!filter) return;
+            activeFilter = filter;
             
             // Update active button
-            filterBtns.forEach(b => b.classList.remove('active'));
+            filterBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
             
             // Filter projects
             projects.forEach(project => {
-                const categories = project.getAttribute('data-category') || '';
+                const categories = (project.getAttribute('data-category') || '').split(/\s+/);
+                const matchesFilter = filter === 'all' || categories.includes(filter);
+                const hideTimer = hideTimers.get(project);
+                if (hideTimer) {
+                    clearTimeout(hideTimer);
+                    hideTimers.delete(project);
+                }
                 
-                if (filter === 'all') {
+                if (matchesFilter) {
                     project.classList.remove('hidden');
                     setTimeout(() => {
+                        if (activeFilter !== 'all' && !categories.includes(activeFilter)) return;
                         project.style.opacity = '1';
                         project.style.transform = 'scale(1)';
                     }, 10);
                 } else {
-                    if (categories.includes(filter)) {
-                        project.classList.remove('hidden');
-                        setTimeout(() => {
-                            project.style.opacity = '1';
-                            project.style.transform = 'scale(1)';
-                        }, 10);
-                    } else {
-                        project.style.opacity = '0';
-                        project.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            project.classList.add('hidden');
-                        }, 250);
-                    }
+                    project.style.opacity = '0';
+                    project.style.transform = 'scale(0.95)';
+                    hideTimers.set(project, setTimeout(() => {
+                        if (activeFilter === 'all' || categories.includes(activeFilter)) return;
+                        project.classList.add('hidden');
+                        hideTimers.delete(project);
+                    }, 250));
                 }
             });
         });
@@ -778,7 +788,7 @@ const projectData = {
     },
     'cogsworths-forge': {
         title: "Cogsworth's Forge",
-        description: 'A steampunk VR project foundation built in Unity 6 for PC and Meta Quest. Configured with URP, Meta OpenXR, the XR Interaction Toolkit, and a shared Unity Input System setup spanning desktop and XR controls. Its version 0.1.0 Android ARM64 baseline prepares the project for future gameplay, art, and interaction development.',
+        description: 'A school project that whisked me into a steampunk world—and my first time trying Meta Quest VR. Building it in Unity 6 was a fun introduction to creating games you can step inside.',
         images: [
             { src: 'images/Cogsworth%27s%20Forge/cogsworth_forge_cover.webp', alt: "Cogsworth's Forge steampunk VR project artwork" }
         ],
