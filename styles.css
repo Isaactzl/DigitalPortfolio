@@ -54,6 +54,10 @@
     box-sizing: border-box;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 html {
     font-size: 16px;
     scroll-behavior: smooth;
@@ -1705,10 +1709,6 @@ body {
     gap: var(--space-md);
     justify-content: space-between;
     align-items: center;
-}
-
-.modal-footer #modal-demo-link[hidden] {
-    display: none;
 }
 
 .modal-footer .btn-secondary {
