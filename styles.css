@@ -1707,6 +1707,10 @@ body {
     align-items: center;
 }
 
+.modal-footer #modal-demo-link[hidden] {
+    display: none;
+}
+
 .modal-footer .btn-secondary {
     padding: 0;
     font-size: 0.875rem;
