@@ -775,6 +775,32 @@ const projectData = {
             'Responsive web UI'
         ],
         demoUrl: 'https://isaactzl.github.io/NBA_GM_Game/'
+    },
+    'cogsworths-forge': {
+        title: "Cogsworth's Forge",
+        description: 'A steampunk VR project foundation built in Unity 6 for PC and Meta Quest. Configured with URP, Meta OpenXR, the XR Interaction Toolkit, and a shared Unity Input System setup spanning desktop and XR controls. Its version 0.1.0 Android ARM64 baseline prepares the project for future gameplay, art, and interaction development.',
+        images: [
+            { src: 'images/Cogsworth%27s%20Forge/cogsworth_forge_cover.webp', alt: "Cogsworth's Forge steampunk VR project artwork" }
+        ],
+        videoUrl: 'images/Cogsworth%27s%20Forge/cogsworth_forge_gameplay_web.mp4',
+        videoPoster: 'images/Cogsworth%27s%20Forge/cogsworth_forge_cover.webp',
+        features: [
+            'Unity 6 foundation for a steampunk VR experience',
+            'Universal Render Pipeline configured for PC and mobile',
+            'Meta OpenXR and XR Interaction Toolkit integration',
+            'Quest Touch controller setup and hand/eye-tracking support',
+            'Shared Input System actions for keyboard, gamepad, and XR',
+            'Version 0.1.0 Android ARM64 build baseline for Meta Quest'
+        ],
+        tech: [
+            'Unity 6',
+            'C# (Unity scripting)',
+            'Universal Render Pipeline (URP)',
+            'XR Interaction Toolkit',
+            'Meta OpenXR',
+            'Unity Input System',
+            'Android ARM64'
+        ]
     }
 }
 
@@ -814,6 +840,7 @@ function initProjectModal() {
                 modalTitle.textContent = project.title;
                 modalDescription.textContent = project.description;
                 modalDemoLink.href = project.demoUrl || '#';
+                modalDemoLink.hidden = !project.demoUrl;
                 
                 // Set main image or video
                 const mediaContainer = document.getElementById('modal-media-container');
