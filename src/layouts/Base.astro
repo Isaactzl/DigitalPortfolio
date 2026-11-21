@@ -1,6 +1,6 @@
 ---
-import { createHash } from 'node:crypto';
 import '../styles/global.css';
+import { lampScript } from '../data/lamp-script';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site, url } from '../data/site';
@@ -19,30 +19,6 @@ const fullTitle = title
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(url('og.png'), Astro.site);
 
-// Sets the lamp (light or dark) before first paint so the page never flashes the wrong
-// colours. It's inline to keep it off the critical path, and the CSP allows exactly this
-// text by its hash and nothing else inline.
-const lampScript =
-  "(function(){var s;try{s=localStorage.getItem('lamp')}catch(e){}" +
-  "var d=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches;" +
-  "document.documentElement.dataset.lamp=s||(d?'on':'off')})()";
-const lampHash = createHash('sha256').update(lampScript).digest('base64');
-
-// Dev mode needs Vite's inline scripts, so the policy only ships in production builds.
-const csp = [
-  "default-src 'self'",
-  `script-src 'self' 'sha256-${lampHash}'`,
-  "style-src 'self'",
-  "img-src 'self' data:",
-  "font-src 'self'",
-  "media-src 'self'",
-  'frame-src https://www.youtube-nocookie.com',
-  "connect-src 'self'",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'none'",
-].join('; ');
-
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -59,7 +35,6 @@ const person = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <script is:inline set:html={lampScript} />
     <title>{fullTitle}</title>

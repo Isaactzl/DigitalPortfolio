@@ -33,7 +33,7 @@ Now Three.js and the fonts are bundled at build time, and the page loads no scri
 
 ## A strict Content Security Policy
 
-Every page carries a CSP that only allows scripts, styles and fonts from this site. Getting there meant no inline scripts or styles. The build tool was quietly inlining two small scripts, which the policy would have blocked, so I turned that off. The one exception is the few lines that set dark or light mode before the page paints: the policy allows that exact script by its SHA-256 hash, so changing even one character would get it blocked.
+Every page carries a CSP that only allows scripts, styles and fonts from this site. There is no `unsafe-inline`. The page's CSS and the few lines that set dark or light mode are inlined so the first paint is fast, and each one is allowed by its exact SHA-256 hash, written into the policy when the site is built. Change a single character and the browser blocks it.
 
 The browser tests listen for CSP violations and fail if a single one happens, so the policy can't quietly break later.
 
