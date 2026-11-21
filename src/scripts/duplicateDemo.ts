@@ -1,8 +1,16 @@
-/**
- * A small stand-in for the real tool's duplicate check: the first store to
- * claim an event owns it, and the other store gets flagged instead of creating
- * a second form.
- */
+import { claimEvent, type Claim } from './bookings';
+
+function describe(claim: Claim, event: string) {
+  switch (claim.kind) {
+    case 'created':
+      return `Store ${claim.store} created "${event}". Link and QR code ready to send.`;
+    case 'reused':
+      return `Store ${claim.store} already made this form. Reusing the existing link.`;
+    case 'duplicate':
+      return `Duplicate: Store ${claim.owner} already has "${event}". Check with them before sending.`;
+  }
+}
+
 export function initDuplicateDemo(root: HTMLElement) {
   const log = root.querySelector<HTMLOListElement>('[data-log]');
   if (!log) return;
@@ -10,7 +18,7 @@ export function initDuplicateDemo(root: HTMLElement) {
   const owners = new Map<string, string>();
   let minutes = 9 * 60 + 12;
 
-  function write(message: string, warn = false) {
+  function write(message: string, warn: boolean) {
     log?.querySelector('.empty')?.remove();
     minutes += 3 + Math.floor(Math.random() * 9);
     const item = document.createElement('li');
@@ -28,18 +36,8 @@ export function initDuplicateDemo(root: HTMLElement) {
       e.preventDefault();
       const store = form.dataset.store ?? '?';
       const event = new FormData(form).get('event')?.toString() ?? '';
-      const owner = owners.get(event);
-      if (owner && owner !== store) {
-        write(
-          `Duplicate: Store ${owner} already has "${event}". Check with them before sending.`,
-          true,
-        );
-      } else if (owner) {
-        write(`Store ${store} already made this form. Reusing the existing link.`);
-      } else {
-        owners.set(event, store);
-        write(`Store ${store} created "${event}". Link and QR code ready to send.`);
-      }
+      const claim = claimEvent(owners, store, event);
+      write(describe(claim, event), claim.kind === 'duplicate');
     });
   });
 

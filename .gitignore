@@ -22,3 +22,8 @@ desktop.ini
 .env
 .env.*
 .claude/settings.local.json
+
+# Test output
+test-results/
+playwright-report/
+.lighthouseci/

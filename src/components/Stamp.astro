@@ -23,7 +23,7 @@ const { status, animate = false } = Astro.props;
     transform: rotate(-10deg);
     filter: url(#ink);
     mix-blend-mode: multiply;
-    opacity: 0.92;
+    opacity: 1;
   }
   .ok {
     color: var(--ok);
@@ -33,6 +33,10 @@ const { status, animate = false } = Astro.props;
   }
   .dim {
     color: var(--ink-dim);
+  }
+  /* Multiply makes ink sink into light paper, but would swallow it on a dark page. */
+  :global(:root[data-lamp='on']) .stamp {
+    mix-blend-mode: normal;
   }
   :global(.ticket:not(.open)) .animate {
     opacity: 0;
@@ -46,7 +50,7 @@ const { status, animate = false } = Astro.props;
       transform: rotate(-10deg) scale(1.9);
     }
     to {
-      opacity: 0.92;
+      opacity: 1;
       transform: rotate(-10deg) scale(1);
     }
   }

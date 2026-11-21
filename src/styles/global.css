@@ -13,12 +13,27 @@
   --ink-soft: #4a463e;
   --ink-dim: #6e685d;
   --bench: #5c8c75;
-  --stamp: #d8432c;
-  --ok: #2f7d4f;
+  --stamp: #c4391f;
+  --ok: #276b43;
   --sans: 'Archivo Variable', system-ui, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
   --gutter: clamp(16px, 4vw, 40px);
   --measure: 68ch;
+}
+
+/* Lamp on: the same paper-and-ink system, after dark. */
+:root[data-lamp='on'] {
+  color-scheme: dark;
+  --sky: #1f1d19;
+  --paper: #24221d;
+  --card: #2c2924;
+  --paper-shade: #3a362e;
+  --line: #403b32;
+  --ink: #ece5d6;
+  --ink-soft: #cbc3b3;
+  --ink-dim: #a39b8b;
+  --stamp: #ef6a4f;
+  --ok: #6cc28f;
 }
 
 *,

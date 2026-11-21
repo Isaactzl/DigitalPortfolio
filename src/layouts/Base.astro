@@ -51,6 +51,7 @@ const person = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <script is:inline src={url('lamp.js')}></script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

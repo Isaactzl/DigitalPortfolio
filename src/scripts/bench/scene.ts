@@ -3,11 +3,11 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { palette } from './materials';
 
 const VIEW_DIRECTION = new THREE.Vector3(15.5, 14, 18).normalize();
-const WIDE_DISTANCE = 27.5;
+export const WIDE_DISTANCE = 27.5;
 export const HOME_TARGET = new THREE.Vector3(0, 0.7, 0);
 
 /** Pulls the camera back on narrow screens so the whole bench stays in frame. */
-function fitDistance(aspect: number) {
+export function fitDistance(aspect: number) {
   return WIDE_DISTANCE * Math.min(1.9, Math.max(1, 1.35 / aspect));
 }
 
@@ -39,7 +39,8 @@ export function createStage(host: HTMLElement) {
   controls.minAzimuthAngle = -0.35;
   controls.maxAzimuthAngle = 1.75;
 
-  scene.add(new THREE.HemisphereLight('#fff7ea', '#9a8a70', 1.25));
+  const sky = new THREE.HemisphereLight('#fff7ea', '#9a8a70', 1.25);
+  scene.add(sky);
   const sun = new THREE.DirectionalLight('#fff0d8', 2.6);
   sun.position.set(7, 13, 6);
   sun.castShadow = true;
@@ -52,6 +53,19 @@ export function createStage(host: HTMLElement) {
   const fill = new THREE.DirectionalLight('#dfe8ff', 0.5);
   fill.position.set(-8, 6, -4);
   scene.add(fill);
+
+  const day = { background: new THREE.Color(palette.sky), sun: new THREE.Color('#fff0d8') };
+  const night = { background: new THREE.Color('#1f1d19'), sun: new THREE.Color('#9fb3d9') };
+  const background = scene.background as THREE.Color;
+
+  /** Fades daylight towards a dim, cool moonlight. 0 is day, 1 is evening. */
+  function evening(amount: number) {
+    background.lerpColors(day.background, night.background, amount);
+    sun.color.lerpColors(day.sun, night.sun, amount);
+    sun.intensity = THREE.MathUtils.lerp(2.6, 0.35, amount);
+    sky.intensity = THREE.MathUtils.lerp(1.25, 0.18, amount);
+    fill.intensity = THREE.MathUtils.lerp(0.5, 0.12, amount);
+  }
 
   function resize() {
     const { clientWidth: w, clientHeight: h } = host;
@@ -66,5 +80,5 @@ export function createStage(host: HTMLElement) {
     camera.position.copy(controls.target).add(offset);
   }
 
-  return { renderer, scene, camera, controls, resize };
+  return { renderer, scene, camera, controls, resize, evening, small };
 }

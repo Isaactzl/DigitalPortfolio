@@ -4,7 +4,18 @@ import astro from 'eslint-plugin-astro';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist/', '.astro/', 'node_modules/', 'mockups/', 'images/', 'Flies/'] },
+  {
+    ignores: [
+      'dist/',
+      '.astro/',
+      'node_modules/',
+      'mockups/',
+      'images/',
+      'Flies/',
+      'test-results/',
+      'playwright-report/',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...astro.configs.recommended,
@@ -14,4 +25,6 @@ export default [
       'no-console': 'error',
     },
   },
+  // The browser tests report CSP violations through the console on purpose.
+  { files: ['e2e/**'], rules: { 'no-console': 'off' } },
 ];

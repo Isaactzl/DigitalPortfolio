@@ -1,10 +1,13 @@
 import type { Bench, BenchId } from './bench';
+import { lampIsOn, setLamp } from './lamp';
 
 const scene = document.querySelector<HTMLElement>('#bench');
 const slot = document.querySelector<HTMLElement>('.ticket-slot');
 const stubs = [...document.querySelectorAll<HTMLElement>('.stub[data-id]')];
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const stacked = matchMedia('(max-width: 860px)');
+/** Matches the ticket's slide transition in Ticket.astro. */
+const SLIDE_MS = 550;
 
 let bench: Bench | null = null;
 let openId: string | null = null;
@@ -32,11 +35,14 @@ function hide(id: string) {
   const ticket = ticketFor(id);
   if (!ticket) return;
   ticket.classList.remove('open');
-  const done = () => {
-    if (!ticket.classList.contains('open')) ticket.hidden = true;
-  };
-  if (reducedMotion) done();
-  else ticket.addEventListener('transitionend', done, { once: true });
+  // A timer rather than transitionend: that event never fires if the slide is
+  // interrupted, which left tickets stuck on screen on phones.
+  setTimeout(
+    () => {
+      if (!ticket.classList.contains('open')) ticket.hidden = true;
+    },
+    reducedMotion ? 0 : SLIDE_MS,
+  );
 }
 
 function close() {
@@ -82,15 +88,19 @@ async function startBench() {
   if (!tip) return;
   const labels = JSON.parse(scene.dataset.labels ?? '{}') as Record<BenchId, string>;
   const { mountBench } = await import('./bench');
-  bench = mountBench(scene, {
+  bench = await mountBench(scene, {
     labels,
     tip,
     reducedMotion,
+    evening: lampIsOn(),
     onSelect: open,
+    onLampClick: () => setLamp(!lampIsOn()),
     onHover: (id) => stubs.forEach((s) => s.classList.toggle('lit', s.dataset.id === id)),
   });
   requestAnimationFrame(() => scene.classList.add('live'));
 }
+
+document.addEventListener('lamp:change', () => bench?.setEvening(lampIsOn()));
 
 // The poster carries first paint; the 3D loads once the browser has a quiet moment.
 const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200));

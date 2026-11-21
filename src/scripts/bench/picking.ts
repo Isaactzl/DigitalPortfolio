@@ -39,6 +39,14 @@ export class Picker<Id extends string> {
     return hit ? (this.owner.get(hit.object) ?? null) : null;
   }
 
+  /** The point under the pointer on a plane facing the camera through `anchor`. */
+  pointerAt(anchor: THREE.Vector3, out: THREE.Vector3) {
+    this.raycaster.setFromCamera(this.pointer, this.camera);
+    const normal = this.camera.getWorldDirection(new THREE.Vector3());
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(normal, anchor);
+    return this.raycaster.ray.intersectPlane(plane, out);
+  }
+
   static glow(group: THREE.Group, on: boolean) {
     group.traverse((o) => {
       if (!(o instanceof THREE.Mesh)) return;

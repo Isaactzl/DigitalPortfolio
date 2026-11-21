@@ -6,3 +6,6 @@ images/
 Flies/
 public/
 package-lock.json
+test-results/
+playwright-report/
+.lighthouseci/

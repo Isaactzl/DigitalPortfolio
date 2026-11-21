@@ -149,6 +149,9 @@ const labels = Object.fromEntries([
     height: 100%;
     object-fit: cover;
   }
+  :global(:root[data-lamp='on']) .poster {
+    filter: brightness(0.42) saturate(0.85);
+  }
   .hint {
     position: absolute;
     left: var(--gutter);
