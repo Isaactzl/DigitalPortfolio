@@ -8,9 +8,6 @@ summary: My first Meta Quest build. A steampunk workshop you can step inside, ma
 cover: ../../assets/projects/cogsworths-forge.webp
 coverAlt: Cogsworth's Forge cover art, a brass and copper steampunk workshop.
 bench: vr
-video:
-  src: media/cogsworths-forge.mp4
-  kind: file
 ---
 
 ## What it is
