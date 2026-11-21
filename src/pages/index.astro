@@ -20,6 +20,9 @@ const queued = {
   status: 'Queued' as const,
 };
 
+const posterAlt =
+  'A workbench with a clipboard and stamp, a padlock, a basketball hoop, a VR headset with brass gears, a desk lamp, and an HDB block with a ginger cat on the roof.';
+
 const labels = Object.fromEntries([
   ...projects.map((p) => [p.data.bench, `${p.data.no} · ${p.data.title}`]),
   ['next', `${queued.no} · ${queued.title}`],
@@ -36,14 +39,25 @@ const labels = Object.fromEntries([
     >
       <Header page="home" overlay />
       <img
-        class="poster"
+        class="poster day"
         src={url('bench-poster.webp')}
-        alt="A workbench with a clipboard and stamp, a basketball hoop, a VR headset with brass gears, and an HDB block with a ginger cat on the roof."
+        alt={posterAlt}
         width="1600"
         height="1000"
         fetchpriority="high"
       />
+      <img
+        class="poster night"
+        src={url('bench-poster-night.webp')}
+        alt={posterAlt}
+        width="1600"
+        height="1000"
+        loading="lazy"
+      />
       <p class="hint label">Drag to look around · tap anything on the bench</p>
+      <button class="wake-bench" type="button" data-wake-bench hidden>
+        Load the 3D bench
+      </button>
       <button class="sound-switch" type="button" data-sound-switch aria-pressed="false">
         <span class="speaker" aria-hidden="true"></span>Sound
       </button>
@@ -155,8 +169,13 @@ const labels = Object.fromEntries([
     height: 100%;
     object-fit: cover;
   }
-  :global(:root[data-lamp='on']) .poster {
-    filter: brightness(0.42) saturate(0.85);
+  /* The night render is lazy, so it only downloads when the lamp is on and it's shown. */
+  .night,
+  :global(:root[data-lamp='on']) .day {
+    display: none;
+  }
+  :global(:root[data-lamp='on']) .night {
+    display: block;
   }
   .hint {
     position: absolute;
@@ -166,6 +185,26 @@ const labels = Object.fromEntries([
     z-index: 2;
     margin: 0;
     pointer-events: none;
+  }
+  .wake-bench {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    z-index: 3;
+    font: 500 12px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    border-radius: 2px;
+    padding: 12px 18px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+  }
+  .wake-bench[hidden] {
+    display: none;
   }
   .sound-switch {
     position: absolute;

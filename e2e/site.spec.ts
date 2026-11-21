@@ -109,7 +109,7 @@ test.describe('without JavaScript', () => {
 
   test('ticket stubs are plain links to the case studies', async ({ page }) => {
     await page.goto('');
-    await expect(page.locator('.poster')).toBeVisible();
+    await expect(page.locator('.poster.day')).toBeVisible();
     await page.locator('.stub[data-id="cats"]').click();
     await expect(page).toHaveURL(/work\/hdb-cats\/$/);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('HDB Cats');
@@ -197,4 +197,30 @@ test('sound is off until switched on, then plays without errors', async ({ page 
     timeout: 15_000,
   });
   expect(problems).toEqual([]);
+});
+
+test.describe('saving battery and data', () => {
+  test('low-memory phones keep the still render until the visitor asks', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'deviceMemory', { get: () => 1 });
+    });
+    await page.goto('');
+    const wake = page.getByRole('button', { name: 'Load the 3D bench' });
+    await expect(wake).toBeVisible();
+    await page.waitForTimeout(1500);
+    await expect(page.locator('#bench canvas')).toHaveCount(0);
+    await wake.click();
+    await expect(page.locator('#bench')).toHaveClass(/live/);
+  });
+
+  test('the bench stops drawing when left alone and wakes when touched', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('');
+    const bench = page.locator('#bench');
+    await expect(bench).toHaveClass(/live/);
+    await expect(bench).toHaveAttribute('data-asleep', 'true');
+    await page.locator('#bench canvas').hover({ position: { x: 200, y: 200 } });
+    await page.mouse.move(260, 240);
+    await expect(bench).toHaveAttribute('data-asleep', 'false');
+  });
 });

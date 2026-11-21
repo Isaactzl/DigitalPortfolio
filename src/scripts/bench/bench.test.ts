@@ -44,6 +44,17 @@ describe('createStampPress', () => {
     expect(stamp.scale.equals(new THREE.Vector3(1, 1, 1))).toBe(true);
   });
 
+  it('reports itself busy until it is back home, so the scene never sleeps mid-press', () => {
+    const stamp = new THREE.Group();
+    const press = createStampPress(stamp);
+    expect(press.busy()).toBe(false);
+    press.start();
+    press.update(0.3);
+    expect(press.busy()).toBe(true);
+    for (let t = 0; t < 1; t += 1 / 60) press.update(1 / 60);
+    expect(press.busy()).toBe(false);
+  });
+
   it('copes with a long frame skipping most of the animation', () => {
     const stamp = new THREE.Group();
     const home = stamp.position.clone();

@@ -149,9 +149,38 @@ function enableBenchKeyboard(host: HTMLElement) {
 
 document.addEventListener('lamp:change', () => bench?.setEvening(lampIsOn()));
 
-// The poster carries first paint; the 3D loads once the browser has a quiet moment.
-const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200));
-idle(() => void startBench());
+/**
+ * Phones that ask to save data, or have very little memory, keep the still render
+ * until the visitor asks for the 3D. Everyone else gets it once the page is idle.
+ */
+function shouldHoldBack() {
+  const nav = navigator as Navigator & {
+    connection?: { saveData?: boolean };
+    deviceMemory?: number;
+  };
+  return (
+    nav.connection?.saveData === true ||
+    (nav.deviceMemory ?? 8) <= 2 ||
+    matchMedia('(prefers-reduced-data: reduce)').matches
+  );
+}
+
+const wakeButton = document.querySelector<HTMLButtonElement>('[data-wake-bench]');
+if (shouldHoldBack() && wakeButton) {
+  wakeButton.hidden = false;
+  wakeButton.addEventListener(
+    'click',
+    () => {
+      wakeButton.hidden = true;
+      void startBench();
+    },
+    { once: true },
+  );
+} else {
+  // The poster carries first paint; the 3D loads once the browser has a quiet moment.
+  const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200));
+  idle(() => void startBench());
+}
 
 const soundSwitch = document.querySelector<HTMLButtonElement>('[data-sound-switch]');
 if (soundSwitch) {

@@ -44,6 +44,9 @@ const HOVER_SPEED = 2.4;
 /** How close the camera comes when something is picked, as a share of its resting distance. */
 const DOLLY_IN = 0.82;
 const DOLLY_MS = 1400;
+/** Quiet time before the bench stops drawing. Shorter with reduced motion: nothing idles then. */
+const SLEEP_MS = 15_000;
+const SLEEP_REDUCED_MS = 2_000;
 const DRAG_TOLERANCE = 6;
 const DUSK_SECONDS = 0.9;
 const TOUCH_GAZE_SECONDS = 2.5;
@@ -116,7 +119,23 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
   let mouseInside = false;
   let downAt: [number, number] | null = null;
 
+  // Idle animation keeps the bench alive, but a scene nobody is touching shouldn't drain
+  // a battery. After a quiet spell it finishes what's moving and stops drawing until poked.
+  const sleepAfter = options.reducedMotion ? SLEEP_REDUCED_MS : SLEEP_MS;
+  let lastPoke = performance.now();
+  let asleep = false;
+  function poke() {
+    lastPoke = performance.now();
+    if (!asleep) return;
+    asleep = false;
+    host.dataset.asleep = 'false';
+    sync();
+  }
+  host.addEventListener('keydown', poke);
+  canvas.addEventListener('wheel', poke, { passive: true });
+
   canvas.addEventListener('pointermove', (e) => {
+    poke();
     picker.setPointer(e.clientX, e.clientY);
     // Touch has no hover; only a mouse should light objects up as it passes.
     mouseInside = e.pointerType === 'mouse';
@@ -125,6 +144,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     mouseInside = false;
   });
   canvas.addEventListener('pointerdown', (e) => {
+    poke();
     downAt = [e.clientX, e.clientY];
   });
   canvas.addEventListener('pointerup', (e) => {
@@ -169,9 +189,11 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     canvas.style.cursor = hovered ? 'pointer' : 'grab';
 
     const active: PickId | null = hovered ?? highlighted;
+    let lifting = false;
     for (const id of ids) {
       const want = id === active || id === selected ? LIFT : 0;
       lift[id] += (want - lift[id]) * Math.min(1, dt * 10);
+      if (Math.abs(want - lift[id]) > 0.002) lifting = true;
       objects[id].group.position.y = lift[id];
       Picker.glow(objects[id].group, id === active);
     }
@@ -201,24 +223,42 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
       const distance = THREE.MathUtils.lerp(offset.length(), dollyTo, Math.min(1, dt * 3));
       camera.position.copy(controls.target).add(offset.setLength(distance));
     }
-    controls.update();
+    const cameraMoving = controls.update();
     renderer.render(scene, camera);
+
+    const settling =
+      lifting ||
+      cameraMoving ||
+      stampPress.busy() ||
+      dusk !== duskTarget ||
+      performance.now() < dollyUntil;
+    if (!settling && performance.now() - lastPoke > sleepAfter) {
+      asleep = true;
+      host.dataset.asleep = 'true';
+      sync();
+    }
   }
 
-  // Only render while the bench is on screen and the tab is visible.
+  // Only render while the bench is on screen, the tab is visible and it isn't asleep.
   let onScreen = true;
-  const sync = () => renderer.setAnimationLoop(onScreen && !document.hidden ? frame : null);
+  function sync() {
+    renderer.setAnimationLoop(onScreen && !document.hidden && !asleep ? frame : null);
+  }
   new IntersectionObserver(([entry]) => {
     onScreen = entry.isIntersecting;
     sync();
   }).observe(host);
-  document.addEventListener('visibilitychange', sync);
-  new ResizeObserver(resize).observe(host);
+  document.addEventListener('visibilitychange', () => (document.hidden ? sync() : poke()));
+  new ResizeObserver(() => {
+    resize();
+    poke();
+  }).observe(host);
   resize();
   sync();
 
   return {
     select(id: BenchId | null) {
+      poke();
       if (!options.reducedMotion) {
         if (!selected && id) restDistance = camera.position.distanceTo(controls.target);
         dollyTo = id ? restDistance * DOLLY_IN : restDistance;
@@ -234,9 +274,11 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
       if (!options.reducedMotion) stampPress.start();
     },
     highlight(id: BenchId | null) {
+      poke();
       highlighted = id;
     },
     setEvening(on: boolean) {
+      poke();
       duskTarget = on ? 1 : 0;
     },
   };

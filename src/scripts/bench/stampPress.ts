@@ -12,6 +12,9 @@ export function createStampPress(stamp: THREE.Group, over = new THREE.Vector3(0.
     start() {
       t = 0;
     },
+    busy() {
+      return t >= 0;
+    },
     update(dt: number) {
       if (t < 0) return;
       t += dt;
