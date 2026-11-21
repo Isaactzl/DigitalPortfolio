@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { palette, part, roundedBox } from '../materials';
 import type { BenchObject } from './types';
+import { easedFlag } from './ease';
 
 const STEEL = { metalness: 0.75, roughness: 0.32 };
 
@@ -13,17 +14,25 @@ export function buildPadlock(): BenchObject {
     metalness: 0.6,
     roughness: 0.35,
   });
-  const shackle = part(
-    lock,
+  // The shackle is its own group so it can lift out, as if unlocked, on hover.
+  const shackle = new THREE.Group();
+  part(
+    shackle,
     new THREE.TorusGeometry(0.25, 0.055, 12, 32, Math.PI),
     '#b9bec2',
     [0, 0.68, 0],
     STEEL,
-  );
-  shackle.scale.y = 1.25;
+  ).scale.y = 1.25;
   for (const x of [-0.25, 0.25]) {
-    part(lock, new THREE.CylinderGeometry(0.055, 0.055, 0.12, 12), '#b9bec2', [x, 0.68, 0], STEEL);
+    part(
+      shackle,
+      new THREE.CylinderGeometry(0.055, 0.055, 0.12, 12),
+      '#b9bec2',
+      [x, 0.68, 0],
+      STEEL,
+    );
   }
+  lock.add(shackle);
   part(
     lock,
     new THREE.CylinderGeometry(0.06, 0.06, 0.02, 16),
@@ -43,11 +52,13 @@ export function buildPadlock(): BenchObject {
   part(key, new THREE.BoxGeometry(0.05, 0.04, 0.07), '#b9bec2', [0.34, 0, 0.05], STEEL);
   group.add(key);
 
+  const unlocked = easedFlag(0.12);
   return {
     group,
-    animate(t) {
+    animate(t, active) {
       // A slow sway, as if someone just let go of it.
       lock.rotation.z = Math.sin(t * 1.3) * 0.03;
+      shackle.position.y = unlocked(active) * 0.16;
     },
   };
 }

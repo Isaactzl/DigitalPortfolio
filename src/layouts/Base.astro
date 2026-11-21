@@ -10,14 +10,22 @@ interface Props {
   description?: string;
   page?: 'home' | 'work' | 'other' | 'about' | 'none';
   bare?: boolean;
+  /** Share image, relative to the site root. */
+  image?: string;
 }
 
-const { title, description = site.description, page = 'none', bare = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  page = 'none',
+  bare = false,
+  image = 'og.png',
+} = Astro.props;
 const fullTitle = title
   ? `${title} · ${site.name}`
   : `${site.name} · ${site.role}, ${site.location}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(url('og.png'), Astro.site);
+const ogImage = new URL(url(image), Astro.site);
 
 const person = {
   '@context': 'https://schema.org',

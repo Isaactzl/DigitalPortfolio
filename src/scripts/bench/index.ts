@@ -39,6 +39,8 @@ const placements: Record<PickId, { at: [number, number]; turn: number }> = {
 };
 
 const LIFT = 0.22;
+/** How much faster an object's idle animation runs while it's hovered. */
+const HOVER_SPEED = 2.4;
 const DRAG_TOLERANCE = 6;
 const DUSK_SECONDS = 0.9;
 const TOUCH_GAZE_SECONDS = 2.5;
@@ -68,6 +70,8 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
   };
   const ids = Object.keys(objects) as PickId[];
   const lift = Object.fromEntries(ids.map((id) => [id, 0])) as Record<PickId, number>;
+  // Each object keeps its own clock so hovering can speed it up without a jump.
+  const clocks = Object.fromEntries(ids.map((id) => [id, 0])) as Record<PickId, number>;
   for (const id of ids) {
     const { group } = objects[id];
     const { at, turn } = placements[id];
@@ -145,7 +149,6 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
   function frame(timestamp: number) {
     timer.update(timestamp);
     const dt = Math.min(timer.getDelta(), 0.05);
-    const t = timer.getElapsed();
 
     const nowHovered = mouseInside ? picker.pick() : null;
     if (nowHovered !== hovered) {
@@ -174,7 +177,12 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     hdb.watch(looking ? picker.pointerAt(catHead, gaze) : null, dt);
 
     stampPress.update(dt);
-    if (!options.reducedMotion) for (const id of ids) objects[id].animate?.(t);
+    if (!options.reducedMotion) {
+      for (const id of ids) {
+        clocks[id] += dt * (id === active ? HOVER_SPEED : 1);
+        objects[id].animate?.(clocks[id], id === active);
+      }
+    }
 
     controls.target.lerp(focus, Math.min(1, dt * 3.5));
     controls.update();

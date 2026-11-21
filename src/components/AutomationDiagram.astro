@@ -1,0 +1,144 @@
+---
+const workspace = [
+  { name: 'Google Forms', job: 'the sign-up form for each event' },
+  { name: 'Sheets', job: 'where the responses land' },
+  { name: 'Drive', job: 'keeps the files together' },
+  { name: 'Gmail', job: 'sends the link out' },
+];
+---
+
+<figure class="diagram">
+  <figcaption class="label">How it fits together</figcaption>
+  <ol class="flow">
+    <li class="node">
+      <span class="label">Who</span>
+      <strong>Store manager</strong>
+      <span>Store A or Store B, filling in the event details</span>
+    </li>
+    <li class="node tool">
+      <span class="label">The tool</span>
+      <strong>One dashboard</strong>
+      <span>Built on Google Apps Script</span>
+      <span class="check">
+        Checks existing events and flags a duplicate before anything is made
+      </span>
+    </li>
+    <li class="node">
+      <span class="label">Google Workspace</span>
+      <ul>
+        {workspace.map((w) => (
+          <li>
+            <strong>{w.name}</strong> <span>{w.job}</span>
+          </li>
+        ))}
+      </ul>
+    </li>
+    <li class="node">
+      <span class="label">Out</span>
+      <strong>Link and QR code</strong>
+      <span>Sent to the party attending, by email or message</span>
+    </li>
+  </ol>
+</figure>
+
+<style>
+  .diagram {
+    margin: 36px 0 8px;
+  }
+  .diagram > .label {
+    display: block;
+    margin-bottom: 12px;
+  }
+  .flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1.35fr 1fr;
+    gap: 26px;
+    align-items: stretch;
+  }
+  .node {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .node strong {
+    color: var(--ink);
+    font-size: 17px;
+  }
+  /* Arrows between steps, drawn in CSS so they follow the layout. */
+  .node:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -22px;
+    top: 50%;
+    width: 16px;
+    height: 2px;
+    background: var(--ink-dim);
+  }
+  .node:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    right: -23px;
+    top: calc(50% - 4px);
+    border: 5px solid transparent;
+    border-left-color: var(--ink-dim);
+    border-right: 0;
+  }
+  .tool {
+    border: 2px solid var(--ink);
+  }
+  .check {
+    margin-top: 6px;
+    padding: 8px 10px;
+    border: 2px dashed var(--stamp);
+    border-radius: 3px;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .node ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .node ul strong {
+    font-size: 15px;
+  }
+  .node ul span {
+    display: block;
+    font-size: 14px;
+  }
+  @media (max-width: 860px) {
+    .flow {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .node:not(:last-child)::after {
+      right: auto;
+      left: 50%;
+      top: auto;
+      bottom: -20px;
+      width: 2px;
+      height: 14px;
+    }
+    .node:not(:last-child)::before {
+      right: auto;
+      left: calc(50% - 4px);
+      top: auto;
+      bottom: -23px;
+      border: 5px solid transparent;
+      border-top-color: var(--ink-dim);
+      border-bottom: 0;
+    }
+  }
+</style>

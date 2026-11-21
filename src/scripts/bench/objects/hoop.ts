@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { palette, part, roundedBox } from '../materials';
 import type { BenchObject } from './types';
+import { easedFlag } from './ease';
 
 export function buildHoop(): BenchObject {
   const group = new THREE.Group();
@@ -41,11 +42,13 @@ export function buildHoop(): BenchObject {
   net.position.set(0.95, 1.89, -0.66);
   group.add(net);
 
+  const excited = easedFlag();
   return {
     group,
-    animate(t) {
+    animate(t, active) {
+      const energy = excited(active);
       const bounce = Math.abs(Math.sin(t * 2.2));
-      ball.position.y = 0.55 + bounce * 0.3;
+      ball.position.y = 0.55 + bounce * (0.3 + energy * 0.35);
       ball.rotation.z = -t * 0.8;
       // A little squash at the bottom of each bounce.
       const squash = 1 - Math.max(0, 0.08 - bounce * 0.3);

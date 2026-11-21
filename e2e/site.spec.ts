@@ -168,3 +168,15 @@ test.describe('the lamp', () => {
     });
   }
 });
+
+test('every page points to a share image that exists', async ({ page, request }) => {
+  for (const path of pages) {
+    await page.goto(path);
+    const image = await page.locator('meta[property="og:image"]').getAttribute('content');
+    expect(image, path).toBeTruthy();
+    // Share images use the production URL; check the same file on the local server.
+    const local = new URL(image ?? '').pathname;
+    const response = await request.get(`http://localhost:4321${local}`);
+    expect(response.status(), `${path} → ${local}`).toBe(200);
+  }
+});

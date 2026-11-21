@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { palette, part, roundedBox } from '../materials';
+import { material, palette, part, roundedBox } from '../materials';
 import type { BenchObject } from './types';
+import { easedFlag } from './ease';
 
 const metal = { metalness: 0.55, roughness: 0.45 };
 
@@ -43,11 +44,13 @@ export function buildHeadset(): BenchObject {
     roughness: 0.3,
     metalness: 0.2,
   });
+  const lenses = material('#7ec8d8', { emissive: '#3a8a9a', emissiveIntensity: 0.8 });
   for (const x of [-0.45, 0.45]) {
-    part(group, new THREE.CylinderGeometry(0.05, 0.05, 0.02, 16), '#7ec8d8', [x, 0.66, 0.445], {
-      emissive: '#3a8a9a',
-      emissiveIntensity: 0.8,
-    }).rotation.x = Math.PI / 2;
+    part(group, new THREE.CylinderGeometry(0.05, 0.05, 0.02, 16), lenses, [
+      x,
+      0.66,
+      0.445,
+    ]).rotation.x = Math.PI / 2;
   }
   part(
     group,
@@ -66,10 +69,13 @@ export function buildHeadset(): BenchObject {
     group.add(g);
   }
 
+  const awake = easedFlag();
   return {
     group,
-    animate(t) {
+    animate(t, active) {
       for (const { g, speed } of gears) g.rotation.y = t * speed;
+      // The headset 'wakes up' when you point at it.
+      lenses.emissiveIntensity = 0.8 + awake(active) * 2.6;
     },
   };
 }
