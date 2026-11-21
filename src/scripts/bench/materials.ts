@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { encode } from 'uqr';
 
 export const palette = {
   sky: '#ece5d6',
@@ -75,37 +76,22 @@ export function topTextured(texture: THREE.Texture, side: THREE.ColorRepresentat
   return [plain, plain, top, plain, plain, plain];
 }
 
-function seeded(seed: number) {
-  let s = seed;
-  return () => (s = (s * 16807) % 2147483647) / 2147483647;
-}
-
-/** Draws a QR-looking pattern. Decorative only: it does not encode anything. */
-export function drawQrPattern(
+/** Draws a real, scannable QR code for `text` into a square at (x, y). */
+export function drawQr(
   g: CanvasRenderingContext2D,
+  text: string,
   x: number,
   y: number,
   size: number,
-  seed: number,
 ) {
-  const n = 15;
-  const finder = 5;
-  const cell = size / n;
-  const rand = seeded(seed);
+  const { data, size: modules } = encode(text, { ecc: 'M', border: 2 });
+  const cell = size / modules;
+  g.fillStyle = '#fbf7ee';
+  g.fillRect(x, y, size, size);
   g.fillStyle = palette.ink;
-  for (let j = 0; j < n; j++) {
-    for (let i = 0; i < n; i++) {
-      const right = i >= n - finder;
-      const bottom = j >= n - finder;
-      const inFinder = (i < finder || right) && (j < finder || bottom) && !(right && bottom);
-      let on = rand() > 0.5;
-      if (inFinder) {
-        const ci = right ? i - (n - finder) : i;
-        const cj = bottom ? j - (n - finder) : j;
-        on =
-          ci === 0 || ci === finder - 1 || cj === 0 || cj === finder - 1 || (ci === 2 && cj === 2);
-      }
+  data.forEach((row, j) =>
+    row.forEach((on, i) => {
       if (on) g.fillRect(x + i * cell, y + j * cell, cell + 0.5, cell + 0.5);
-    }
-  }
+    }),
+  );
 }

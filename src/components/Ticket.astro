@@ -2,6 +2,7 @@
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import Stamp from './Stamp.astro';
+import QrCode from './QrCode.astro';
 import type { Status } from '../data/status';
 
 interface Props {
@@ -54,7 +55,10 @@ const headingId = `ticket-${id}-title`;
   </div>
   <div class="t-foot">
     {href ? <a href={href}>Open case study</a> : <span class="label">Coming soon</span>}
-    <Stamp status={status} animate />
+    <div class="t-marks">
+      <Stamp status={status} animate />
+      {href && <QrCode value={new URL(href, Astro.site).href} size={58} />}
+    </div>
   </div>
 </article>
 
@@ -155,6 +159,11 @@ const headingId = `ticket-${id}-title`;
   }
   .t-foot::after {
     right: -9px;
+  }
+  .t-marks {
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
   .t-foot a {
     font: 500 12px var(--mono);

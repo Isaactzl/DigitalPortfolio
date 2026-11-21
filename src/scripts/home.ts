@@ -87,17 +87,55 @@ async function startBench() {
   const tip = scene.querySelector<HTMLElement>('.tip');
   if (!tip) return;
   const labels = JSON.parse(scene.dataset.labels ?? '{}') as Record<BenchId, string>;
+  const formsStub = stubFor('forms');
+  const qrUrl = formsStub instanceof HTMLAnchorElement ? formsStub.href : location.href;
   const { mountBench } = await import('./bench');
   bench = await mountBench(scene, {
     labels,
     tip,
     reducedMotion,
+    qrUrl,
     evening: lampIsOn(),
     onSelect: open,
     onLampClick: () => setLamp(!lampIsOn()),
-    onHover: (id) => stubs.forEach((s) => s.classList.toggle('lit', s.dataset.id === id)),
+    onHover: lightStub,
   });
+  enableBenchKeyboard(scene);
   requestAnimationFrame(() => scene.classList.add('live'));
+}
+
+function lightStub(id: string | null) {
+  stubs.forEach((s) => s.classList.toggle('lit', s.dataset.id === id));
+}
+
+/** Arrow keys step through the objects on the bench; Enter opens the one that's lifted. */
+function enableBenchKeyboard(host: HTMLElement) {
+  const order = stubs.map((s) => s.dataset.id as BenchId);
+  let cursor = -1;
+  const show = (index: number) => {
+    cursor = (index + order.length) % order.length;
+    bench?.highlight(order[cursor]);
+    lightStub(order[cursor]);
+  };
+
+  host.tabIndex = 0;
+  host.setAttribute(
+    'aria-label',
+    'The workbench. Use the arrow keys to pick an object and Enter to open it. The same projects are listed as tickets.',
+  );
+  host.addEventListener('keydown', (e) => {
+    if (e.target !== host) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') show(cursor + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') show(cursor - 1);
+    else if ((e.key === 'Enter' || e.key === ' ') && cursor >= 0) open(order[cursor]);
+    else return;
+    e.preventDefault();
+  });
+  host.addEventListener('blur', () => {
+    cursor = -1;
+    bench?.highlight(null);
+    lightStub(null);
+  });
 }
 
 document.addEventListener('lamp:change', () => bench?.setEvening(lampIsOn()));

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {
   canvasTexture,
-  drawQrPattern,
+  drawQr,
   material,
   palette,
   part,
@@ -14,7 +14,8 @@ export interface Clipboard extends BenchObject {
   stamp: THREE.Group;
 }
 
-export function buildClipboard(): Clipboard {
+/** `qrUrl` is what the code printed on the form opens when scanned. */
+export function buildClipboard(qrUrl: string): Clipboard {
   const group = new THREE.Group();
   part(group, roundedBox(1.9, 0.1, 2.5, 0.05), '#b07f50', [0, 0.05, 0]);
 
@@ -39,7 +40,7 @@ export function buildClipboard(): Clipboard {
       g.lineTo(w - 36, y + 26);
       g.stroke();
     });
-    drawQrPattern(g, w - 196, h - 200, 160, 7);
+    drawQr(g, qrUrl, w - 196, h - 200, 160);
     g.fillStyle = palette.stamp;
     g.fillRect(36, h - 70, 130, 30);
     g.fillStyle = '#fff';

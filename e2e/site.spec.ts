@@ -7,8 +7,10 @@ const pages = [
   'work/hardwood-hustle/',
   'work/cogsworths-forge/',
   'work/hdb-cats/',
+  'work/hardening-this-site/',
   'other/',
   'about/',
+  'how-it-works/',
 ];
 
 /** Records console errors, uncaught exceptions and CSP violations for a page. */
@@ -80,6 +82,26 @@ test.describe('bench and tickets', () => {
     await expect(page.locator('[data-ticket="cats"]')).toBeVisible();
     await expect(page.locator('[data-ticket="forms"]')).toBeHidden();
   });
+});
+
+test('the bench can be driven from the keyboard', async ({ page }) => {
+  await page.goto('');
+  const bench = page.locator('#bench');
+  await expect(bench).toHaveClass(/live/, { timeout: 15_000 });
+  await bench.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('.stub[data-id="forms"]')).toHaveClass(/lit/);
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('.stub[data-id="hoops"]')).toHaveClass(/lit/);
+  await page.keyboard.press('Enter');
+  await expect(page.locator('[data-ticket="hoops"]')).toBeVisible();
+});
+
+test('each ticket carries a QR code for its case study', async ({ page }) => {
+  await page.goto('');
+  const qr = page.locator('[data-ticket="cats"] svg.qr');
+  await expect(qr).toHaveAttribute('aria-label', /work\/hdb-cats\/$/);
+  await expect(page.locator('[data-ticket="next"] svg.qr')).toHaveCount(0);
 });
 
 test.describe('without JavaScript', () => {

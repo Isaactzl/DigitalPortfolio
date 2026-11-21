@@ -12,7 +12,7 @@ const projects = (await getCollection('projects')).sort((a, b) =>
 
 const queued = {
   id: 'next',
-  no: '005',
+  no: '006',
   title: 'Next project',
   kind: 'Queued',
   summary: 'A security or data project, in progress. This spot on the bench is saved for it.',
@@ -59,7 +59,7 @@ const labels = Object.fromEntries([
 
       <div class="stack-head">
         <span class="label">Order tickets</span>
-        <span class="label">5</span>
+        <span class="label">{projects.length + 1}</span>
       </div>
       <ol class="stubs">
         {projects.map((p) => (
@@ -122,6 +122,9 @@ const labels = Object.fromEntries([
     position: relative;
     min-height: 0;
     overflow: hidden;
+  }
+  .scene:focus-visible {
+    outline-offset: -6px;
   }
   .scene::after {
     content: '';

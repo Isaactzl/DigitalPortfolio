@@ -1,5 +1,5 @@
 ---
-import { site } from '../data/site';
+import { site, url } from '../data/site';
 ---
 
 <footer class="site-footer">
@@ -7,6 +7,7 @@ import { site } from '../data/site';
     {site.name} · {site.location}
   </span>
   <span class="links">
+    <a href={url('how-it-works/')}>How this site works</a>
     <a href={site.github} rel="me noopener">
       GitHub
     </a>

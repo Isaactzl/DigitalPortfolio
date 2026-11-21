@@ -8,11 +8,12 @@ import { buildHoop } from './objects/hoop';
 import { buildHeadset } from './objects/headset';
 import { buildHdb } from './objects/hdb';
 import { buildSlot } from './objects/slot';
+import { buildPadlock } from './objects/padlock';
 import { buildProps } from './objects/props';
 import { buildLamp } from './objects/lamp';
 import type { BenchObject } from './objects/types';
 
-export type BenchId = 'forms' | 'hoops' | 'vr' | 'cats' | 'next';
+export type BenchId = 'forms' | 'hoops' | 'vr' | 'cats' | 'lock' | 'next';
 type PickId = BenchId | 'lamp';
 
 export interface BenchOptions {
@@ -20,6 +21,8 @@ export interface BenchOptions {
   tip: HTMLElement;
   reducedMotion: boolean;
   evening: boolean;
+  /** Absolute URL encoded in the QR code on the clipboard's form. */
+  qrUrl: string;
   onSelect: (id: BenchId) => void;
   onLampClick: () => void;
   onHover?: (id: BenchId | null) => void;
@@ -30,6 +33,7 @@ const placements: Record<PickId, { at: [number, number]; turn: number }> = {
   hoops: { at: [2.7, 1.5], turn: -0.3 },
   vr: { at: [0.35, -1.65], turn: -0.15 },
   cats: { at: [-4.15, -1.45], turn: 0.2 },
+  lock: { at: [0.75, 2.55], turn: -0.25 },
   next: { at: [4.0, -1.65], turn: 0 },
   lamp: { at: [-1.6, -3.55], turn: 0.3 },
 };
@@ -50,7 +54,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
   scene.add(buildBench(), buildProps());
   await nextTask();
 
-  const clipboard = buildClipboard();
+  const clipboard = buildClipboard(options.qrUrl);
   const hdb = buildHdb();
   await nextTask();
   const objects: Record<PickId, BenchObject> = {
@@ -58,6 +62,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     hoops: buildHoop(),
     vr: buildHeadset(),
     cats: hdb,
+    lock: buildPadlock(),
     next: buildSlot(),
     lamp: buildLamp(!small),
   };

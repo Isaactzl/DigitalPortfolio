@@ -1,0 +1,37 @@
+---
+import { encode } from 'uqr';
+
+interface Props {
+  /** Absolute URL the code should open. */
+  value: string;
+  size?: number;
+}
+
+const { value, size = 64 } = Astro.props;
+const { data, size: modules } = encode(value, { ecc: 'M', border: 2 });
+
+// One path for all dark modules keeps the markup small.
+const path = data
+  .flatMap((row, y) => row.map((on, x) => (on ? `M${x} ${y}h1v1h-1z` : '')))
+  .join('');
+---
+
+<svg
+  class="qr"
+  viewBox={`0 0 ${modules} ${modules}`}
+  width={size}
+  height={size}
+  role="img"
+  aria-label={`QR code that opens ${value}`}
+  shape-rendering="crispEdges"
+>
+  <rect width={modules} height={modules} fill="#fffaf0"></rect>
+  <path d={path} fill="#1c1b18"></path>
+</svg>
+
+<style>
+  .qr {
+    flex: none;
+    border-radius: 2px;
+  }
+</style>

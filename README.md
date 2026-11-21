@@ -50,7 +50,7 @@ Measured with Lighthouse 13 (simulated mid-range phone):
 | Case study   | 99          | 100           | 100            | 100 |
 | About        | 100         | 100           | 100            | 100 |
 
-The home page's score is held back by rendering the 3D scene in software under Lighthouse's throttled CPU; largest contentful paint is about 2 s and layout shift is near zero. CI fails the build if any page drops below its budget in [`lighthouserc.json`](lighthouserc.json).
+The home page's score is held back by rendering the 3D scene in software under Lighthouse's throttled CPU; largest contentful paint is about 2 s and layout shift is near zero. CI fails the build on the metrics visitors feel (first and largest paint, layout shift) and on accessibility, best practices and SEO for every page. The home page's overall performance score only warns, because on CI's shared, GPU-less runners it swings with the hardware. Budgets are in [`lighthouserc.json`](lighthouserc.json).
 
 ## Running it
 

@@ -26,7 +26,7 @@ export function buildSlot(): BenchObject {
     g.fillRect(0, 0, w, h);
     g.fillStyle = palette.inkDim;
     g.font = '500 26px monospace';
-    g.fillText('NO. 005', 24, 42);
+    g.fillText('NO. 006', 24, 42);
     g.fillText('QUEUED', 24, 78);
   });
   part(
