@@ -18,7 +18,11 @@ const stubFor = (id: string) => stubs.find((s) => s.dataset.id === id);
 function open(id: string) {
   const ticket = ticketFor(id);
   if (!ticket) return;
-  if (openId && openId !== id) hide(openId);
+  // Clear every other ticket that's showing, judged by the page rather than by
+  // `openId`, so a fast second click can never leave two tickets stacked.
+  slot?.querySelectorAll<HTMLElement>('.ticket').forEach((other) => {
+    if (other !== ticket && !other.hidden) hide(other);
+  });
   openId = id;
   ticket.hidden = false;
   // Force a layout so the slide-in transition starts from the off-screen position.
@@ -31,9 +35,7 @@ function open(id: string) {
     slot?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
 }
 
-function hide(id: string) {
-  const ticket = ticketFor(id);
-  if (!ticket) return;
+function hide(ticket: HTMLElement) {
   ticket.classList.remove('open');
   // A timer rather than transitionend: that event never fires if the slide is
   // interrupted, which left tickets stuck on screen on phones.
@@ -48,7 +50,8 @@ function hide(id: string) {
 function close() {
   if (!openId) return;
   const id = openId;
-  hide(id);
+  const ticket = ticketFor(id);
+  if (ticket) hide(ticket);
   openId = null;
   stubs.forEach((s) => s.setAttribute('aria-expanded', 'false'));
   bench?.select(null);

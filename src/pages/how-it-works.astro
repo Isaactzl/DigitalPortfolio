@@ -95,8 +95,8 @@ const numbers = [
       <h2>Locked down</h2>
       <p>
         Every page has a Content Security Policy that only allows scripts, styles and fonts from
-        this site. Nothing is inlined, and the only outside content is the YouTube player, which
-        loads only after you press Play. The full story is in the{' '}
+        this site. The only inline script is allowed by its exact hash, and the only outside content
+        is the YouTube player, which loads only after you press Play. The full story is in the{' '}
         <a href={url('work/hardening-this-site/')}>hardening case study</a>.
       </p>
     </section>

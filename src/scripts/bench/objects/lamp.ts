@@ -45,6 +45,8 @@ export function buildLamp(castShadow: boolean): BenchObject {
   return {
     group,
     evening(amount) {
+      // Fully off in daylight, so its shadow pass isn't rendered every frame for nothing.
+      light.visible = amount > 0;
       light.intensity = amount * 38;
       bulb.emissiveIntensity = amount * 3;
     },
