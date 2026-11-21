@@ -180,3 +180,21 @@ test('every page points to a share image that exists', async ({ page, request })
     expect(response.status(), `${path} → ${local}`).toBe(200);
   }
 });
+
+test('sound is off until switched on, then plays without errors', async ({ page }) => {
+  const problems = await watchForProblems(page);
+  await page.goto('');
+  await expect(page.locator('#bench')).toHaveClass(/live/, { timeout: 15_000 });
+  const sound = page.locator('[data-sound-switch]');
+  await expect(sound).toHaveAttribute('aria-pressed', 'false');
+  await sound.click();
+  await expect(sound).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('.stub[data-id="forms"]').click();
+  await page.locator('[data-lamp-switch]').click();
+  await page.waitForTimeout(800);
+  await page.reload();
+  await expect(page.locator('[data-sound-switch]')).toHaveAttribute('aria-pressed', 'true', {
+    timeout: 15_000,
+  });
+  expect(problems).toEqual([]);
+});

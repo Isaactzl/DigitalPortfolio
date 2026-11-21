@@ -1,3 +1,5 @@
+import { playClick } from './sound';
+
 /** The desk lamp doubles as the site's dark mode: lamp on means evening. */
 export const lampIsOn = () => document.documentElement.dataset.lamp === 'on';
 
@@ -9,6 +11,7 @@ export function setLamp(on: boolean) {
     // Private mode or blocked storage: the switch still works for this visit.
   }
   syncSwitches();
+  playClick();
   document.dispatchEvent(new CustomEvent('lamp:change', { detail: on }));
 }
 

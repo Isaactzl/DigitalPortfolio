@@ -44,6 +44,9 @@ const labels = Object.fromEntries([
         fetchpriority="high"
       />
       <p class="hint label">Drag to look around · tap anything on the bench</p>
+      <button class="sound-switch" type="button" data-sound-switch aria-pressed="false">
+        <span class="speaker" aria-hidden="true"></span>Sound
+      </button>
       <div class="tip" aria-hidden="true"></div>
     </section>
 
@@ -158,13 +161,59 @@ const labels = Object.fromEntries([
   .hint {
     position: absolute;
     left: var(--gutter);
-    right: var(--gutter);
+    right: calc(var(--gutter) + 110px);
     bottom: 22px;
     z-index: 2;
     margin: 0;
     pointer-events: none;
   }
-  .scene:not(:global(.live)) .hint {
+  .sound-switch {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 16px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font: 500 11px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 7px 11px;
+    cursor: pointer;
+  }
+  .sound-switch:hover {
+    border-color: var(--ink);
+  }
+  /* A speaker drawn in CSS: a small box, plus a wave when sound is on. */
+  .speaker {
+    position: relative;
+    width: 6px;
+    height: 8px;
+    background: var(--ink-dim);
+    border-radius: 1px;
+  }
+  .speaker::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: -2px;
+    width: 6px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+  }
+  .sound-switch[aria-pressed='true'] .speaker {
+    background: var(--ink);
+  }
+  .sound-switch[aria-pressed='true'] .speaker::after {
+    border-right-color: var(--stamp);
+  }
+  .scene:not(:global(.live)) .hint,
+  .scene:not(:global(.live)) .sound-switch {
     display: none;
   }
   .tip {

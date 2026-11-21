@@ -41,6 +41,9 @@ const placements: Record<PickId, { at: [number, number]; turn: number }> = {
 const LIFT = 0.22;
 /** How much faster an object's idle animation runs while it's hovered. */
 const HOVER_SPEED = 2.4;
+/** How close the camera comes when something is picked, as a share of its resting distance. */
+const DOLLY_IN = 0.82;
+const DOLLY_MS = 1400;
 const DRAG_TOLERANCE = 6;
 const DUSK_SECONDS = 0.9;
 const TOUCH_GAZE_SECONDS = 2.5;
@@ -96,6 +99,14 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
 
   const stampPress = createStampPress(clipboard.stamp);
   const focus = HOME_TARGET.clone();
+  // Picking something eases the camera in; closing eases it back. Dragging or zooming
+  // hands control straight back to the visitor.
+  let restDistance = camera.position.distanceTo(controls.target);
+  let dollyTo = restDistance;
+  let dollyUntil = 0;
+  controls.addEventListener('start', () => {
+    dollyUntil = 0;
+  });
   const catHead = hdb.group.localToWorld(new THREE.Vector3(0.2, 3.3, 0.22));
   const gaze = new THREE.Vector3();
   let touchGazeUntil = 0;
@@ -185,6 +196,11 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     }
 
     controls.target.lerp(focus, Math.min(1, dt * 3.5));
+    if (performance.now() < dollyUntil) {
+      const offset = camera.position.clone().sub(controls.target);
+      const distance = THREE.MathUtils.lerp(offset.length(), dollyTo, Math.min(1, dt * 3));
+      camera.position.copy(controls.target).add(offset.setLength(distance));
+    }
     controls.update();
     renderer.render(scene, camera);
   }
@@ -203,13 +219,18 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
 
   return {
     select(id: BenchId | null) {
+      if (!options.reducedMotion) {
+        if (!selected && id) restDistance = camera.position.distanceTo(controls.target);
+        dollyTo = id ? restDistance * DOLLY_IN : restDistance;
+        dollyUntil = performance.now() + DOLLY_MS;
+      }
       selected = id;
       if (!id) {
         focus.copy(HOME_TARGET);
         return;
       }
       const position = objects[id].group.getWorldPosition(new THREE.Vector3());
-      focus.set(position.x * 0.25, HOME_TARGET.y, position.z * 0.25);
+      focus.set(position.x * 0.4, HOME_TARGET.y, position.z * 0.4);
       if (!options.reducedMotion) stampPress.start();
     },
     highlight(id: BenchId | null) {

@@ -1,5 +1,6 @@
 import type { Bench, BenchId } from './bench';
 import { lampIsOn, setLamp } from './lamp';
+import { playThunk, setSound, soundIsOn } from './sound';
 
 const scene = document.querySelector<HTMLElement>('#bench');
 const slot = document.querySelector<HTMLElement>('.ticket-slot');
@@ -8,6 +9,8 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const stacked = matchMedia('(max-width: 860px)');
 /** Matches the ticket's slide transition in Ticket.astro. */
 const SLIDE_MS = 550;
+/** When the stamp lands, in both the 3D press and the ticket's stamp. */
+const STAMP_LANDS_MS = 450;
 
 let bench: Bench | null = null;
 let openId: string | null = null;
@@ -33,6 +36,7 @@ function open(id: string) {
   ticket.focus({ preventScroll: true });
   stubs.forEach((s) => s.setAttribute('aria-expanded', String(s.dataset.id === id)));
   bench?.select(id as BenchId);
+  setTimeout(playThunk, reducedMotion ? 0 : STAMP_LANDS_MS);
   if (stacked.matches)
     slot?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
 }
@@ -148,3 +152,13 @@ document.addEventListener('lamp:change', () => bench?.setEvening(lampIsOn()));
 // The poster carries first paint; the 3D loads once the browser has a quiet moment.
 const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200));
 idle(() => void startBench());
+
+const soundSwitch = document.querySelector<HTMLButtonElement>('[data-sound-switch]');
+if (soundSwitch) {
+  soundSwitch.setAttribute('aria-pressed', String(soundIsOn()));
+  soundSwitch.addEventListener('click', () => {
+    const on = !soundIsOn();
+    setSound(on);
+    soundSwitch.setAttribute('aria-pressed', String(on));
+  });
+}
