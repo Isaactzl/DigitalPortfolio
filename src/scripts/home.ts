@@ -18,10 +18,12 @@ const stubFor = (id: string) => stubs.find((s) => s.dataset.id === id);
 function open(id: string) {
   const ticket = ticketFor(id);
   if (!ticket) return;
-  // Clear every other ticket that's showing, judged by the page rather than by
-  // `openId`, so a fast second click can never leave two tickets stacked.
+  // Switching tickets: the new one slides in over the old, so the old one can go at
+  // once. No timer here, because a busy main thread can delay a timer for seconds.
   slot?.querySelectorAll<HTMLElement>('.ticket').forEach((other) => {
-    if (other !== ticket && !other.hidden) hide(other);
+    if (other === ticket) return;
+    other.classList.remove('open');
+    other.hidden = true;
   });
   openId = id;
   ticket.hidden = false;
