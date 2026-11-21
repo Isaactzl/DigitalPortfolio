@@ -1,0 +1,58 @@
+[
+  {
+    "id": "chikia",
+    "title": "CHIKIA",
+    "line": "A story-driven adventure stitched together from minigames.",
+    "stack": ["Unity", "C#"],
+    "image": "../assets/other/chikia.png",
+    "youtube": "6McchUiTS6A"
+  },
+  {
+    "id": "minigames",
+    "title": "Triggered Games minigames",
+    "line": "Five 2D minigames from my internship: Floor is Lava, Hide & Seek, Hoops Madness, Hexa Blast and Press It.",
+    "stack": ["Game design", "2D"],
+    "image": "../assets/other/minigames.png",
+    "youtube": "kOIFboFgMRo"
+  },
+  {
+    "id": "zypher",
+    "title": "ZYPHER",
+    "line": "A landing page for an e-bike, built around an interactive 3D model.",
+    "stack": ["HTML", "Three.js"],
+    "image": "../assets/other/zypher.png",
+    "youtube": "v_PU21hG4OA"
+  },
+  {
+    "id": "sonova",
+    "title": "Sonova",
+    "line": "A marketplace for licensing custom album cover art.",
+    "stack": ["Web", "E-commerce"],
+    "image": "../assets/other/sonova.png",
+    "youtube": "4HQdmC3X6iw"
+  },
+  {
+    "id": "stock-sensei",
+    "title": "Stock Sensei",
+    "line": "Lessons that make the stock market less scary for beginners.",
+    "stack": ["React", "Market data APIs"],
+    "image": "../assets/other/stock-sensei.png",
+    "youtube": "Xr_YEtSqxVg"
+  },
+  {
+    "id": "avise",
+    "title": "Avise",
+    "line": "A budgeting and expense tracker to keep money goals on track.",
+    "stack": ["React", "PWA"],
+    "image": "../assets/other/avise.png",
+    "youtube": "gS3JuWG0EMk"
+  },
+  {
+    "id": "galactic-heist",
+    "title": "Galactic Heist",
+    "line": "A live web game with multiplayer challenges that update in real time.",
+    "stack": ["Web", "Realtime"],
+    "image": "../assets/other/galactic-heist.png",
+    "youtube": "ivauQLJwhJQ"
+  }
+]

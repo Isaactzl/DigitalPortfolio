@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+
+const items = await getCollection('other');
+---
+
+<Base
+  title="Other work"
+  description="School, internship and side projects that didn't make the bench."
+  page="other"
+>
+  <section class="wrap other">
+    <span class="label">Off the bench</span>
+    <h1>Other work</h1>
+    <p class="lede">School, internship and side projects. Smaller, older, still mine.</p>
+    <ul class="grid">
+      {items.map(({ data }) => (
+        <li class="card">
+          <Image
+            src={data.image}
+            alt=""
+            widths={[360, 640]}
+            sizes="(max-width: 700px) 100vw, 360px"
+          />
+          <div class="card-body">
+            <h2>{data.title}</h2>
+            <p>{data.line}</p>
+            <span class="label">{data.stack.join(' · ')}</span>
+            {data.youtube && (
+              <a href={`https://www.youtube.com/watch?v=${data.youtube}`} rel="noopener">
+                Watch on YouTube<span class="visually-hidden">: {data.title}</span>
+              </a>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .other {
+    padding: clamp(32px, 6vw, 72px) 0 64px;
+  }
+  h1 {
+    font-size: clamp(40px, 7vw, 76px);
+    margin: 14px 0 12px;
+  }
+  .lede {
+    color: var(--ink-soft);
+    font-size: 19px;
+    margin: 0 0 40px;
+  }
+  .grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .card :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    height: auto;
+  }
+  .card-body {
+    padding: 16px 18px 20px;
+    display: grid;
+    gap: 8px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  .card-body p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .card-body a {
+    font: 500 11px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+</style>

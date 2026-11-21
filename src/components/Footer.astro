@@ -1,0 +1,43 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <span class="label">
+    {site.name} · {site.location}
+  </span>
+  <span class="links">
+    <a href={site.github} rel="me noopener">
+      GitHub
+    </a>
+    <a href={site.linkedin} rel="me noopener">
+      LinkedIn
+    </a>
+    <a href={`mailto:${site.email}`}>Email</a>
+  </span>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 28px var(--gutter) 40px;
+    border-top: 1px solid var(--line);
+  }
+  .links {
+    display: flex;
+    gap: 18px;
+  }
+  .links a {
+    font: 500 12px var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-dim);
+  }
+  .links a:hover {
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+import { site, url } from '../data/site';
+
+interface Props {
+  page: string;
+  overlay?: boolean;
+}
+
+const { page, overlay = false } = Astro.props;
+const links = [
+  { href: url(), label: 'Bench', id: 'home' },
+  { href: url('other/'), label: 'Other work', id: 'other' },
+  { href: url('about/'), label: 'About', id: 'about' },
+];
+---
+
+<header class:list={['site-header', { overlay }]}>
+  <a class="brand" href={url()}>
+    <strong>{site.name}</strong>
+    <span class="label">{overlay ? 'The workbench' : site.location}</span>
+  </a>
+  <nav aria-label="Main">
+    {links.map((l) => (
+      <a href={l.href} aria-current={page === l.id ? 'page' : undefined}>
+        {l.label}
+      </a>
+    ))}
+    <a href={url(site.cv)} download>
+      CV
+    </a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 20px var(--gutter);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header.overlay {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 3;
+    border: 0;
+    pointer-events: none;
+  }
+  .overlay > * {
+    pointer-events: auto;
+  }
+  .brand {
+    text-decoration: none;
+    display: grid;
+  }
+  .brand strong {
+    font-size: 21px;
+    font-weight: 800;
+    font-stretch: 110%;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  nav a {
+    font: 500 11px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 11px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--card);
+    transition:
+      transform 0.15s ease,
+      border-color 0.15s ease;
+  }
+  nav a:hover {
+    transform: translateY(-1px);
+    border-color: var(--ink);
+  }
+  nav a[aria-current='page'] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  @media (max-width: 520px) {
+    .site-header {
+      align-items: flex-start;
+    }
+    .brand strong {
+      font-size: 18px;
+      white-space: nowrap;
+    }
+    .brand .label {
+      display: none;
+    }
+    nav {
+      gap: 4px;
+    }
+    nav a {
+      padding: 6px 7px;
+      letter-spacing: 0.06em;
+    }
+  }
+</style>

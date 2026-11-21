@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import portrait from '../assets/isaac.jpg';
+import { site, url } from '../data/site';
+---
+
+<Base title="About" description="Who Isaac Tan is and what he's working on." page="about">
+  <section class="wrap about">
+    <div class="text">
+      <span class="label">About</span>
+      <h1>Hi, I'm Isaac.</h1>
+      <p>
+        I finished a Diploma in Media, Arts &amp; Design (Game Design) at Singapore Polytechnic in
+        April 2026, and I'm serving National Service now.
+      </p>
+      <p>
+        My favourite work is the kind that quietly saves someone time: during my internship at
+        Triggered Games I built the tool our store managers used every day to set up event forms. I
+        also make games, mostly in Unity, and I'm a big basketball fan, which is how Hardwood Hustle
+        happened.
+      </p>
+      <p>I like figuring out how a system behaves, then making it behave better.</p>
+
+      <dl class="facts">
+        <dt>Languages</dt>
+        <dd>C#, JavaScript, SQL, Luau, HTML, CSS</dd>
+        <dt>Tools</dt>
+        <dd>Unity, Google Apps Script, Three.js, Git</dd>
+        <dt>Now</dt>
+        <dd>Full-time NS · Singapore Armed Forces</dd>
+      </dl>
+
+      <div class="actions">
+        <a class="cv" href={url(site.cv)} download>
+          Download CV
+        </a>
+        <a href={`mailto:${site.email}`}>Email me</a>
+      </div>
+    </div>
+    <Image
+      class="portrait"
+      src={portrait}
+      alt="Isaac Tan"
+      widths={[320, 560]}
+      sizes="(max-width: 760px) 70vw, 340px"
+    />
+  </section>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+    padding: clamp(32px, 6vw, 72px) 0 64px;
+  }
+  h1 {
+    font-size: clamp(40px, 7vw, 76px);
+    margin: 14px 0 20px;
+  }
+  .text p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px 16px;
+    margin: 32px 0;
+    padding: 20px 0;
+    border-block: 2px dashed var(--line);
+  }
+  dt {
+    font: 500 11px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding-top: 3px;
+  }
+  dd {
+    margin: 0;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+  }
+  .actions a {
+    font: 500 12px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .actions .cv {
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--stamp);
+    padding: 13px 20px;
+    border-radius: 2px;
+    box-shadow: 0 3px 0 #8f2717;
+  }
+  .portrait {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    transform: rotate(1.5deg);
+    box-shadow: 0 24px 50px -24px rgba(60, 45, 20, 0.5);
+  }
+  @media (max-width: 760px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      max-width: 280px;
+      order: -1;
+    }
+  }
+</style>

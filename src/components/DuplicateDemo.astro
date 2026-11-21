@@ -1,0 +1,122 @@
+---
+const events = ['Sat 14 Dec · Birthday party · 12 pax', 'Sun 15 Dec · Team outing · 20 pax'];
+---
+
+<section class="demo" aria-label="Duplicate booking demo">
+  {['A', 'B'].map((store) => (
+    <form class="store" data-store={store}>
+      <span class="label">Store {store}</span>
+      <label>
+        <span class="visually-hidden">Event for store {store}</span>
+        <select name="event">
+          {events.map((e) => (
+            <option>{e}</option>
+          ))}
+        </select>
+      </label>
+      <button type="submit">Create form</button>
+    </form>
+  ))}
+  <div class="log">
+    <div class="log-head">
+      <span class="label">System log</span>
+      <button type="button" data-reset>
+        Reset
+      </button>
+    </div>
+    <ol aria-live="polite" data-log>
+      <li class="empty">Nothing yet. Create a form from either store.</li>
+    </ol>
+  </div>
+</section>
+
+<script>
+  import { initDuplicateDemo } from '../scripts/duplicateDemo';
+  document.querySelectorAll<HTMLElement>('.demo').forEach(initDuplicateDemo);
+</script>
+
+<style>
+  .demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.25fr;
+    gap: 14px;
+    margin: 28px 0 8px;
+  }
+  .store,
+  .log {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  select {
+    width: 100%;
+    font: 14px var(--sans);
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 10px;
+  }
+  button {
+    font: 500 11px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    border-radius: 2px;
+    padding: 12px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #34322d;
+  }
+  .log-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .log-head button {
+    padding: 6px 10px;
+    color: var(--ink-dim);
+    background: transparent;
+    border: 1px solid var(--line);
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    font: 12.5px/1.5 var(--mono);
+    min-height: 200px;
+    align-content: start;
+  }
+  ol :global(li) {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  ol :global(li.empty) {
+    display: block;
+    color: var(--ink-dim);
+    border: 0;
+  }
+  ol :global(time) {
+    color: var(--ink-dim);
+  }
+  ol :global(li.warn) {
+    color: var(--stamp);
+  }
+  @media (max-width: 760px) {
+    .demo {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

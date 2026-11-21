@@ -1,0 +1,53 @@
+---
+import { toneOf, type Status } from '../data/status';
+
+interface Props {
+  status: Status;
+  animate?: boolean;
+}
+
+const { status, animate = false } = Astro.props;
+---
+
+<span class:list={['stamp', toneOf(status), { animate }]}>{status}</span>
+
+<style>
+  .stamp {
+    display: inline-block;
+    font: 500 14px var(--mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 2.5px solid currentColor;
+    padding: 6px 12px 5px;
+    border-radius: 3px;
+    transform: rotate(-10deg);
+    filter: url(#ink);
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+  }
+  .ok {
+    color: var(--ok);
+  }
+  .warm {
+    color: var(--stamp);
+  }
+  .dim {
+    color: var(--ink-dim);
+  }
+  :global(.ticket:not(.open)) .animate {
+    opacity: 0;
+  }
+  :global(.ticket.open) .animate {
+    animation: thunk 0.28s 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  }
+  @keyframes thunk {
+    from {
+      opacity: 0;
+      transform: rotate(-10deg) scale(1.9);
+    }
+    to {
+      opacity: 0.92;
+      transform: rotate(-10deg) scale(1);
+    }
+  }
+</style>

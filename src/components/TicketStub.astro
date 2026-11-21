@@ -1,0 +1,92 @@
+---
+import { toneOf, type Status } from '../data/status';
+
+interface Props {
+  id: string;
+  no: string;
+  title: string;
+  status: Status;
+  href?: string;
+}
+
+const { id, no, title, status, href } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<li>
+  <Tag
+    class="stub"
+    data-id={id}
+    href={href}
+    type={href ? undefined : 'button'}
+    aria-controls={`ticket-${id}`}
+    aria-expanded="false"
+  >
+    <span class="no">{no}</span>
+    <span class="name">{title}</span>
+    <span class:list={['status', toneOf(status)]}>{status}</span>
+  </Tag>
+</li>
+
+<style>
+  .stub {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 38px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 2px dashed var(--paper-shade);
+    border-radius: 3px;
+    padding: 13px 16px;
+    cursor: pointer;
+    box-shadow: 0 1px 0 var(--paper-shade);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+  .stub:hover,
+  .stub:focus-visible,
+  .stub:global(.lit) {
+    transform: translateX(-4px);
+    box-shadow: 4px 3px 0 var(--paper-shade);
+  }
+  .stub[aria-expanded='true'] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .stub[aria-expanded='true'] .no,
+  .stub[aria-expanded='true'] .status {
+    color: #c9c3b6;
+  }
+  .no {
+    font: 11px var(--mono);
+    color: var(--ink-dim);
+  }
+  .name {
+    font-size: 17px;
+    font-weight: 700;
+    font-stretch: 104%;
+  }
+  .status {
+    font: 500 10px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ok {
+    color: var(--ok);
+  }
+  .warm {
+    color: var(--stamp);
+  }
+  .dim {
+    color: var(--ink-dim);
+  }
+</style>

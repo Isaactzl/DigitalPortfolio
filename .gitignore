@@ -1,14 +1,15 @@
-# Private drafts and CV source (only the exported PDF is published)
-Flies/*
-!Flies/Isaac_Tan_CV.pdf
-*.draft.*
+# Build output
+dist/
+.astro/
+node_modules/
+
+# Private drafts and CV source; the published CV lives in public/cv/
+Flies/
 PROJECTS_SECTION_RESPONSE.md
 
-# Raw media; only web-ready exports are committed
-*.mp4
-!images/Hardwood Hustle/HH Gameplay.mp4
-!images/Cogsworth's Forge/cogsworth_forge_gameplay_web.mp4
-images/**/*_cover.png
+# Raw media and design explorations, kept locally only
+images/
+mockups/
 
 # OS and editor
 .DS_Store
@@ -17,9 +18,7 @@ desktop.ini
 .vscode/
 .idea/
 
-# Tooling
-node_modules/
-dist/
+# Local tooling
 .env
 .env.*
 .claude/settings.local.json
