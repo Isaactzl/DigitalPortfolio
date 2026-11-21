@@ -7,6 +7,9 @@ export default defineConfig({
   forbidOnly: ci,
   retries: ci ? 1 : 0,
   reporter: ci ? 'github' : 'list',
+  // CI runners have no GPU, so the 3D renders in software and can keep the page busy for
+  // over a second at a time. Animations still finish there, just later.
+  expect: { timeout: ci ? 15_000 : 5_000 },
   use: {
     baseURL: 'http://localhost:4321/DigitalPortfolio/',
     // Locally, use the installed Chrome instead of downloading a browser.
