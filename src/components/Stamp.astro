@@ -34,9 +34,10 @@ const { status, animate = false } = Astro.props;
   .dim {
     color: var(--ink-dim);
   }
-  /* Multiply makes ink sink into light paper, but would swallow it on a dark page. */
+  /* Multiply sinks ink into light paper but would swallow it on a dark page, so evening
+     uses screen. Not "normal": with the ink filter, Chrome then draws nothing at all. */
   :global(:root[data-lamp='on']) .stamp {
-    mix-blend-mode: normal;
+    mix-blend-mode: screen;
   }
   :global(.ticket:not(.open)) .animate {
     opacity: 0;
