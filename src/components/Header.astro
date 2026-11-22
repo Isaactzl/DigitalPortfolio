@@ -131,24 +131,28 @@ const links = [
   }
   @media (max-width: 520px) {
     .site-header {
-      align-items: flex-start;
+      align-items: center;
+      gap: 10px;
     }
     .brand strong {
-      font-size: 18px;
+      font-size: 17px;
       white-space: nowrap;
     }
     .brand .label {
       display: none;
     }
     nav {
-      gap: 4px;
+      flex-wrap: nowrap;
+      gap: 3px;
     }
     nav a {
-      padding: 6px 7px;
-      letter-spacing: 0.06em;
+      font-size: 10px;
+      padding: 6px 6px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
     }
     .lamp-switch {
-      padding: 6px 8px;
+      padding: 6px 7px;
     }
     .lamp-text {
       position: absolute;

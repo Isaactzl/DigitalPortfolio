@@ -21,6 +21,8 @@ Triggered Games runs events out of two store locations. Every event needed its o
 
 An internal web tool on Google Apps Script. A manager fills in the event details and the tool creates the form, then generates a shareable link and a QR code for it, ready to send to the party attending by email or message.
 
+Each type of form has its ID set in the app, so it knows which script handles that form and sends managers to the right one. The responses land in Sheets, and every form sits in the company's Google Drive, so managers can get to them any time.
+
 Forms, Sheets, Drive and Gmail sit behind one dashboard, so nobody jumps between apps. Managers at both stores used it daily.
 
 ## Two managers, one Saturday
