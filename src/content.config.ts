@@ -35,4 +35,28 @@ const other = defineCollection({
     }),
 });
 
-export const collections = { projects, other };
+const topic = z.enum(['linux', 'network', 'web', 'python', 'data', 'mainframe']);
+const baseQuestion = z
+  .object({
+    id: z.string(),
+    topic,
+    kind: z.enum(['choice', 'typed']),
+    prompt: z.string(),
+    code: z.string().optional(),
+    choices: z.array(z.string()).min(2).optional(),
+    answer: z.union([z.number().int().min(0), z.array(z.string()).min(1)]),
+    explain: z.string().min(10),
+  })
+  // A choice question needs choices and an index into them; a typed one needs accepted answers.
+  .refine((q) =>
+    q.kind === 'choice'
+      ? typeof q.answer === 'number' && !!q.choices && q.answer < q.choices.length
+      : Array.isArray(q.answer),
+  );
+
+const questions = defineCollection({
+  loader: file('./src/content/questions.json'),
+  schema: z.intersection(baseQuestion, z.object({ followUp: baseQuestion.optional() })),
+});
+
+export const collections = { projects, other, questions };

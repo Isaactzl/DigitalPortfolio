@@ -1,0 +1,611 @@
+[
+  {
+    "id": "linux-sudo",
+    "topic": "linux",
+    "kind": "choice",
+    "prompt": "What does sudo do?",
+    "choices": [
+      "Deletes a file permanently",
+      "Runs one command with another user's privileges, usually root",
+      "Switches the computer into safe mode",
+      "Lists every running program"
+    ],
+    "answer": 1,
+    "explain": "sudo runs a single command with elevated (usually root) privileges, after checking you're allowed to."
+  },
+  {
+    "id": "linux-chmod-640",
+    "topic": "linux",
+    "kind": "choice",
+    "prompt": "After running chmod 640 report.txt, what can members of the file's group do?",
+    "choices": ["Read and write it", "Only read it", "Nothing", "Read, write and run it"],
+    "answer": 1,
+    "explain": "Each digit is owner, group, others. 6 = read + write, 4 = read only, 0 = nothing. So the group can only read."
+  },
+  {
+    "id": "linux-ram",
+    "topic": "linux",
+    "kind": "choice",
+    "prompt": "Which of these loses its contents when the computer powers off?",
+    "choices": ["The SSD", "The hard drive", "RAM", "A USB stick"],
+    "answer": 2,
+    "explain": "RAM is volatile working memory. Drives and USB sticks are persistent storage and keep their data."
+  },
+  {
+    "id": "linux-pwd",
+    "topic": "linux",
+    "kind": "typed",
+    "prompt": "Which command prints the directory you're currently in?",
+    "answer": ["pwd"],
+    "explain": "pwd stands for 'print working directory'."
+  },
+  {
+    "id": "linux-exec-bits",
+    "topic": "linux",
+    "kind": "choice",
+    "prompt": "ls -l shows a script as -rwxr-x---. Who can run it?",
+    "choices": ["Only the owner", "The owner and the group", "Everyone", "Nobody"],
+    "answer": 1,
+    "explain": "After the first dash come owner (rwx), group (r-x) and others (---). Both owner and group have x, so both can run it."
+  },
+  {
+    "id": "linux-cd-up",
+    "topic": "linux",
+    "kind": "choice",
+    "prompt": "What does cd .. do?",
+    "choices": [
+      "Goes to your home directory",
+      "Moves up one directory",
+      "Lists hidden files",
+      "Deletes the current directory"
+    ],
+    "answer": 1,
+    "explain": ".. always means the parent directory, so cd .. moves up one level."
+  },
+  {
+    "id": "linux-cat",
+    "topic": "linux",
+    "kind": "typed",
+    "prompt": "Which three-letter command prints a whole text file to the terminal?",
+    "answer": ["cat"],
+    "explain": "cat (short for concatenate) prints a file's contents straight to the terminal."
+  },
+  {
+    "id": "linux-rm-r",
+    "topic": "linux",
+    "kind": "choice",
+    "prompt": "In rm -r logs/, what does -r mean?",
+    "choices": [
+      "Read-only: show what would be deleted",
+      "Recursive: delete the folder and everything inside it",
+      "Restore: undo the last delete",
+      "Root: run as administrator"
+    ],
+    "answer": 1,
+    "explain": "-r makes rm recursive, so it removes the folder and all its contents. There's no undo, so it's worth double-checking."
+  },
+  {
+    "id": "net-https-port",
+    "topic": "network",
+    "kind": "typed",
+    "prompt": "Which port does HTTPS use by default?",
+    "answer": ["443"],
+    "explain": "HTTPS listens on 443 by default. Plain HTTP uses 80."
+  },
+  {
+    "id": "net-ssh-port",
+    "topic": "network",
+    "kind": "typed",
+    "prompt": "Which port does SSH use by default?",
+    "answer": ["22"],
+    "explain": "SSH, for secure remote logins, uses port 22."
+  },
+  {
+    "id": "net-dns-port",
+    "topic": "network",
+    "kind": "typed",
+    "prompt": "Which port do DNS lookups use?",
+    "answer": ["53"],
+    "explain": "DNS uses port 53, mostly over UDP."
+  },
+  {
+    "id": "net-dns",
+    "topic": "network",
+    "kind": "choice",
+    "prompt": "What does DNS do?",
+    "choices": [
+      "Encrypts traffic between two computers",
+      "Turns domain names like example.com into IP addresses",
+      "Assigns IP addresses to devices on a network",
+      "Blocks malicious websites"
+    ],
+    "answer": 1,
+    "explain": "DNS is the internet's phone book: it resolves names to the IP addresses computers actually connect to. Handing out addresses is DHCP's job."
+  },
+  {
+    "id": "net-cia",
+    "topic": "network",
+    "kind": "choice",
+    "prompt": "In security, what does the CIA triad stand for?",
+    "choices": [
+      "Confidentiality, Integrity, Availability",
+      "Control, Inspection, Access",
+      "Cryptography, Identity, Authentication",
+      "Confidentiality, Isolation, Auditing"
+    ],
+    "answer": 0,
+    "explain": "Confidentiality: only the right people see it. Integrity: it isn't tampered with. Availability: it's there when needed."
+  },
+  {
+    "id": "net-private-ip",
+    "topic": "network",
+    "kind": "choice",
+    "prompt": "Which of these is a private IP address?",
+    "choices": ["8.8.8.8", "192.168.1.10", "1.1.1.1", "172.217.4.46"],
+    "answer": 1,
+    "explain": "192.168.0.0/16 is a private range, along with 10.0.0.0/8 and 172.16.0.0/12. 172.217.x.x sits outside 172.16–172.31, so it's public."
+  },
+  {
+    "id": "net-telnet-rule",
+    "topic": "network",
+    "kind": "choice",
+    "prompt": "A firewall rule says: deny inbound TCP port 23. What does it stop?",
+    "choices": [
+      "All web browsing",
+      "Telnet connections coming in from outside",
+      "Emails being sent",
+      "DNS lookups"
+    ],
+    "answer": 1,
+    "explain": "Port 23 is Telnet, an old remote-login protocol that sends everything, passwords included, as plain text. Blocking it is common."
+  },
+  {
+    "id": "net-segmentation",
+    "topic": "network",
+    "kind": "choice",
+    "prompt": "Why split a network into segments?",
+    "choices": [
+      "To make Wi-Fi faster",
+      "So a breach in one part can't easily spread to the rest",
+      "So devices don't need IP addresses",
+      "To avoid using a firewall"
+    ],
+    "answer": 1,
+    "explain": "Segmentation limits how far an attacker can move. Traffic between segments has to pass rules you control."
+  },
+  {
+    "id": "net-tcp-udp",
+    "topic": "network",
+    "kind": "choice",
+    "prompt": "Which protocol guarantees data arrives complete and in order?",
+    "choices": ["UDP", "TCP", "ICMP", "ARP"],
+    "answer": 1,
+    "explain": "TCP retransmits lost packets and keeps them in order. UDP is faster but makes no promises."
+  },
+  {
+    "id": "web-404",
+    "topic": "web",
+    "kind": "typed",
+    "prompt": "Which HTTP status code means the page or resource wasn't found?",
+    "answer": ["404"],
+    "explain": "404 Not Found: the server is fine, but there's nothing at that path."
+  },
+  {
+    "id": "web-200",
+    "topic": "web",
+    "kind": "typed",
+    "prompt": "Which HTTP status code means the request worked?",
+    "answer": ["200"],
+    "explain": "200 OK is the normal success response."
+  },
+  {
+    "id": "web-401",
+    "topic": "web",
+    "kind": "choice",
+    "prompt": "What does a 401 response mean?",
+    "choices": [
+      "The server crashed",
+      "You need to log in (you're not authenticated)",
+      "The page moved",
+      "Your request was too large"
+    ],
+    "answer": 1,
+    "explain": "401 Unauthorized really means unauthenticated: the server doesn't know who you are yet."
+  },
+  {
+    "id": "web-403",
+    "topic": "web",
+    "kind": "choice",
+    "prompt": "You're logged in, but the server answers 403. Why?",
+    "choices": [
+      "Your password is wrong",
+      "It knows who you are, but you're not allowed to do this",
+      "The server is overloaded",
+      "The URL doesn't exist"
+    ],
+    "answer": 1,
+    "explain": "403 Forbidden: you're authenticated, but you aren't authorised for that resource."
+  },
+  {
+    "id": "web-500",
+    "topic": "web",
+    "kind": "choice",
+    "prompt": "A request returns 500. Whose problem is it, most likely?",
+    "choices": [
+      "The client's: the request was malformed",
+      "The server's: something broke on its side",
+      "Nobody's: it means success",
+      "The DNS server's"
+    ],
+    "answer": 1,
+    "explain": "5xx codes are server errors. 4xx codes point at the request instead."
+  },
+  {
+    "id": "web-400",
+    "topic": "web",
+    "kind": "choice",
+    "prompt": "What does 400 Bad Request tell you?",
+    "choices": [
+      "The server couldn't understand the request, e.g. malformed data",
+      "You were rate limited",
+      "The server is down for maintenance",
+      "The request succeeded with no content"
+    ],
+    "answer": 0,
+    "explain": "400 means the request itself is wrong, such as invalid JSON or a missing field, so sending it again unchanged won't help."
+  },
+  {
+    "id": "web-get",
+    "topic": "web",
+    "kind": "choice",
+    "prompt": "In a REST API, which method should only read data, never change it?",
+    "choices": ["POST", "GET", "DELETE", "PATCH"],
+    "answer": 1,
+    "explain": "GET fetches data and shouldn't change anything. POST creates, PATCH updates and DELETE removes."
+  },
+  {
+    "id": "web-json-nested",
+    "topic": "web",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "data = {\"user\": {\"name\": \"Ana\", \"id\": 7}}\nprint(data[\"user\"][\"id\"])",
+    "answer": ["7"],
+    "explain": "data[\"user\"] is the inner dictionary, and [\"id\"] on that gives 7."
+  },
+  {
+    "id": "web-valid-json",
+    "topic": "web",
+    "kind": "choice",
+    "prompt": "Which of these is valid JSON?",
+    "choices": ["{port: 443}", "{'port': 443}", "{\"port\": 443}", "{\"port\": 443,}"],
+    "answer": 2,
+    "explain": "JSON needs double-quoted keys and strings, and no trailing comma."
+  },
+  {
+    "id": "py-string-add",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "print(\"45\" + \"90\")",
+    "answer": ["4590"],
+    "explain": "Both are strings, so + joins them instead of adding them."
+  },
+  {
+    "id": "py-int-add",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "print(int(\"50\") + int(\"25\"))",
+    "answer": ["75"],
+    "explain": "int() turns each string into a number first, so this is real addition: 50 + 25."
+  },
+  {
+    "id": "py-while",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "x = 0\nwhile x < 3:\n    x += 1\nprint(x)",
+    "answer": ["3"],
+    "explain": "The loop runs while x is 0, 1 and 2. After the third pass x is 3, the condition fails, and 3 is printed."
+  },
+  {
+    "id": "py-try-except",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "try:\n    n = int(\"abc\")\nexcept ValueError:\n    n = -1\nprint(n)",
+    "answer": ["-1"],
+    "explain": "int(\"abc\") raises ValueError, so the except block runs and sets n to -1."
+  },
+  {
+    "id": "py-bool-compare",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "state = \"DOWN\"\nis_offline = (state == \"DOWN\")\nprint(is_offline)",
+    "answer": ["True"],
+    "explain": "The comparison is evaluated first and its result, True, is stored in the variable."
+  },
+  {
+    "id": "py-list-dict",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "servers = [{\"port\": 22}, {\"port\": 80}, {\"port\": 443}]\nprint(servers[2][\"port\"])",
+    "answer": ["443"],
+    "explain": "Lists count from 0, so servers[2] is the third dictionary, and its port is 443."
+  },
+  {
+    "id": "py-split-index",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "header = \"TCP:8080:OK\"\nprint(header.split(\":\")[1])",
+    "answer": ["8080"],
+    "explain": "split(\":\") gives [\"TCP\", \"8080\", \"OK\"], and index 1 is the second item."
+  },
+  {
+    "id": "py-elif",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "signal = -72\nif signal > -50:\n    print(\"strong\")\nelif signal > -80:\n    print(\"ok\")\nelse:\n    print(\"weak\")",
+    "answer": ["ok"],
+    "explain": "-72 isn't greater than -50, but it is greater than -80 (closer to zero), so the elif branch prints ok."
+  },
+  {
+    "id": "py-not-and",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "print(not (True and False))",
+    "answer": ["True"],
+    "explain": "True and False is False, and not False is True."
+  },
+  {
+    "id": "py-slice",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "device_id = \"SG-RX-2049\"\nprint(device_id[3:5])",
+    "answer": ["RX"],
+    "explain": "Index 3 is R and slices stop before the end index, so [3:5] gives characters 3 and 4: RX."
+  },
+  {
+    "id": "py-filter-loop",
+    "topic": "python",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "loads = [30, 85, 60, 92]\nhigh = []\nfor load in loads:\n    if load > 80:\n        high.append(load)\nprint(len(high))",
+    "answer": ["2"],
+    "explain": "Only 85 and 92 are over 80, so two items are appended."
+  },
+  {
+    "id": "data-spot-injection",
+    "topic": "data",
+    "kind": "choice",
+    "prompt": "Which line is open to SQL injection?",
+    "choices": [
+      "cur.execute(\"SELECT * FROM users WHERE name = ?\", (name,))",
+      "cur.execute(\"SELECT * FROM users WHERE name = '\" + name + \"'\")",
+      "cur.execute(\"SELECT COUNT(*) FROM users\")",
+      "cur.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))"
+    ],
+    "answer": 1,
+    "explain": "Gluing user input into the SQL text lets that input change the query itself. The ? versions send input separately as data."
+  },
+  {
+    "id": "data-why-params",
+    "topic": "data",
+    "kind": "choice",
+    "prompt": "Why do parameterised queries stop SQL injection?",
+    "choices": [
+      "They encrypt the database",
+      "User input is passed as data and is never run as part of the SQL",
+      "They block special characters in passwords",
+      "They make the query run faster"
+    ],
+    "answer": 1,
+    "explain": "The database gets the query and the values separately, so whatever the user typed can only ever be a value."
+  },
+  {
+    "id": "data-allowlist",
+    "topic": "data",
+    "kind": "choice",
+    "prompt": "A field should only accept a 6-digit postal code. Which validation is safest?",
+    "choices": [
+      "Block a list of known bad characters",
+      "Only accept exactly six digits and reject everything else",
+      "Accept anything and clean it up later",
+      "Trust it, since the form says 'postal code'"
+    ],
+    "answer": 1,
+    "explain": "An allowlist (accept only what's expected) beats a blocklist, because you can't list every bad input in advance."
+  },
+  {
+    "id": "data-log-level",
+    "topic": "data",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "line = \"2026-11-23 10:42:07 WARN auth failed user=admin\"\nparts = line.split(\" \")\nprint(parts[2])",
+    "answer": ["WARN"],
+    "explain": "Splitting on spaces gives date, time, level, ... and index 2 is the third item: WARN."
+  },
+  {
+    "id": "data-payload",
+    "topic": "data",
+    "kind": "typed",
+    "prompt": "What does this print?",
+    "code": "payload = \"ID:00417;TEMP:31\"\nprint(payload.split(\";\")[1].split(\":\")[1])",
+    "answer": ["31"],
+    "explain": "Splitting on ; gives \"TEMP:31\" at index 1. Splitting that on : gives \"31\" at index 1."
+  },
+  {
+    "id": "data-where",
+    "topic": "data",
+    "kind": "typed",
+    "prompt": "In SQL, which keyword picks only the rows that match a condition?",
+    "answer": ["WHERE"],
+    "explain": "WHERE filters rows, as in SELECT * FROM logins WHERE success = 0."
+  },
+  {
+    "id": "data-passwords",
+    "topic": "data",
+    "kind": "choice",
+    "prompt": "How should a system store user passwords?",
+    "choices": [
+      "As plain text, so support can read them",
+      "Encrypted, so they can be decrypted when needed",
+      "Hashed with a salt, using a slow algorithm like bcrypt",
+      "Base64-encoded"
+    ],
+    "answer": 2,
+    "explain": "Passwords should never be recoverable. A salted, deliberately slow hash makes stolen hashes very hard to crack. Base64 is just encoding."
+  },
+  {
+    "id": "data-brute-force",
+    "topic": "data",
+    "kind": "choice",
+    "prompt": "One account shows 40 failed logins in a minute, then a success from a new country. What's most likely?",
+    "choices": [
+      "The user forgot their password while travelling",
+      "Someone guessed the password through brute force",
+      "The server clock is wrong",
+      "A normal password reset"
+    ],
+    "answer": 1,
+    "explain": "Dozens of rapid failures followed by a success is the classic sign of a password being guessed. Lock the account and alert."
+  },
+  {
+    "id": "mf-log-status",
+    "topic": "mainframe",
+    "kind": "typed",
+    "prompt": "Trace it. What does this print?",
+    "code": "log = \"10.0.0.5 GET /admin 403\"\nparts = log.split(\" \")\nprint(parts[3])",
+    "answer": ["403"],
+    "explain": "Splitting on spaces gives IP, method, path and status, and index 3 is the status: 403.",
+    "followUp": {
+      "id": "mf-log-status-2",
+      "topic": "mainframe",
+      "kind": "choice",
+      "prompt": "That request to /admin got 403. What does it mean?",
+      "choices": [
+        "The page doesn't exist",
+        "The client is known, but not allowed in",
+        "The server crashed",
+        "The request succeeded"
+      ],
+      "answer": 1,
+      "explain": "403 Forbidden: the server refused access. Many 403s on /admin from one IP is worth investigating."
+    }
+  },
+  {
+    "id": "mf-port-math",
+    "topic": "mainframe",
+    "kind": "typed",
+    "prompt": "Trace it. What does this print?",
+    "code": "ports = {\"ssh\": 22, \"web\": 443}\nprint(ports[\"ssh\"] + 1)",
+    "answer": ["23"],
+    "explain": "ports[\"ssh\"] is the number 22, so adding 1 gives 23.",
+    "followUp": {
+      "id": "mf-port-math-2",
+      "topic": "mainframe",
+      "kind": "choice",
+      "prompt": "Port 23 is usually which service, and why is it risky?",
+      "choices": [
+        "HTTPS, because it's slow",
+        "Telnet, because it sends everything including passwords as plain text",
+        "DNS, because it can be spoofed",
+        "SSH, because it's encrypted"
+      ],
+      "answer": 1,
+      "explain": "Telnet on port 23 has no encryption at all, which is why SSH (22) replaced it."
+    }
+  },
+  {
+    "id": "mf-count-fails",
+    "topic": "mainframe",
+    "kind": "typed",
+    "prompt": "Trace it. What does this print?",
+    "code": "attempts = [\"fail\", \"fail\", \"ok\", \"fail\"]\nfails = 0\nfor a in attempts:\n    if a == \"fail\":\n        fails += 1\nprint(fails)",
+    "answer": ["3"],
+    "explain": "Three of the four items are \"fail\", so the counter ends at 3.",
+    "followUp": {
+      "id": "mf-count-fails-2",
+      "topic": "mainframe",
+      "kind": "choice",
+      "prompt": "If those were 300 failed logins for one account in a minute, what's the sensible response?",
+      "choices": [
+        "Ignore it, users mistype all the time",
+        "Temporarily lock the account and raise an alert",
+        "Delete the logs to free up space",
+        "Restart the server"
+      ],
+      "answer": 1,
+      "explain": "Locking slows the guessing down, and the alert gets a person looking at it."
+    }
+  },
+  {
+    "id": "mf-try-total",
+    "topic": "mainframe",
+    "kind": "typed",
+    "prompt": "Trace it. What does this print?",
+    "code": "raw = \"45\"\ntry:\n    total = int(raw) + 5\nexcept ValueError:\n    total = 0\nprint(total)",
+    "answer": ["50"],
+    "explain": "\"45\" converts cleanly to 45, so total is 50 and the except block never runs.",
+    "followUp": {
+      "id": "mf-try-total-2",
+      "topic": "mainframe",
+      "kind": "typed",
+      "prompt": "Same code, but raw = \"4five\". What does it print now?",
+      "answer": ["0"],
+      "explain": "int(\"4five\") raises ValueError, so the except block sets total to 0."
+    }
+  },
+  {
+    "id": "mf-busy-server",
+    "topic": "mainframe",
+    "kind": "typed",
+    "prompt": "Trace it. What does this print?",
+    "code": "servers = [{\"name\": \"a\", \"load\": 40}, {\"name\": \"b\", \"load\": 95}]\nbusy = []\nfor s in servers:\n    if s[\"load\"] > 90:\n        busy.append(s[\"name\"])\nprint(busy[0])",
+    "answer": ["b"],
+    "explain": "Only server b is above 90, so it's the first (and only) name in busy.",
+    "followUp": {
+      "id": "mf-busy-server-2",
+      "topic": "mainframe",
+      "kind": "choice",
+      "prompt": "Server b suddenly hits 95% load. What do you check first?",
+      "choices": [
+        "Its recent logs and traffic, to see what changed",
+        "Nothing, load always goes up",
+        "Turn off the firewall to let traffic through",
+        "Delete the server"
+      ],
+      "answer": 0,
+      "explain": "Logs and traffic show whether it's a real rush, a fault, or something like a flood of requests."
+    }
+  },
+  {
+    "id": "mf-safe-query",
+    "topic": "mainframe",
+    "kind": "choice",
+    "prompt": "Is this query safe from SQL injection?",
+    "code": "name = request_input\ncur.execute(\"SELECT * FROM users WHERE name = ?\", (name,))",
+    "choices": [
+      "Yes, the ? placeholder sends the input separately as data",
+      "No, any user input in a query is unsafe",
+      "Only if the name is shorter than 10 characters",
+      "Only if the users table is small"
+    ],
+    "answer": 0,
+    "explain": "A parameterised query keeps input out of the SQL text, so it can't change what the query does.",
+    "followUp": {
+      "id": "mf-safe-query-2",
+      "topic": "mainframe",
+      "kind": "typed",
+      "prompt": "Which SQL keyword in that query filters the rows?",
+      "answer": ["WHERE"],
+      "explain": "WHERE keeps only the rows whose name matches."
+    }
+  }
+]
