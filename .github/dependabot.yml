@@ -9,6 +9,11 @@ updates:
       dependencies:
         patterns: ['*']
     open-pull-requests-limit: 5
+    ignore:
+      # @astrojs/check only supports TypeScript 5 and 6 so far; take 7 once it does.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+  # Actions are pinned to commit hashes; Dependabot updates the hash and the version comment together.
   - package-ecosystem: github-actions
     directory: /
     schedule:
