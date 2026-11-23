@@ -8,6 +8,7 @@ const pages = [
   'work/cogsworths-forge/',
   'work/hdb-cats/',
   'work/hardening-this-site/',
+  'work/mainframe-run/',
   'other/',
   'about/',
   'how-it-works/',
@@ -101,7 +102,6 @@ test('each ticket carries a QR code for its case study', async ({ page }) => {
   await page.goto('');
   const qr = page.locator('[data-ticket="cats"] svg.qr');
   await expect(qr).toHaveAttribute('aria-label', /work\/hdb-cats\/$/);
-  await expect(page.locator('[data-ticket="next"] svg.qr')).toHaveCount(0);
 });
 
 test.describe('without JavaScript', () => {
@@ -223,4 +223,17 @@ test.describe('saving battery and data', () => {
     await page.mouse.move(260, 240);
     await expect(bench).toHaveAttribute('data-asleep', 'false');
   });
+});
+
+test('project 006 opens from its stub and leads to the game', async ({ page }) => {
+  await page.goto('');
+  await expect(page.locator('.stub[data-id="next"]')).toHaveCount(0);
+  await page.locator('.stub[data-id="arcade"]').click();
+  const ticket = page.locator('[data-ticket="arcade"]');
+  await expect(ticket).toBeVisible();
+  await expect(ticket).toContainText('Mainframe Run');
+  await ticket.getByRole('link', { name: 'Open case study' }).click();
+  await expect(page).toHaveURL(/work\/mainframe-run\/$/);
+  await page.getByRole('link', { name: 'Play it live' }).click();
+  await expect(page).toHaveURL(/play\/$/);
 });

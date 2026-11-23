@@ -10,23 +10,12 @@ const projects = (await getCollection('projects')).sort((a, b) =>
   a.data.no.localeCompare(b.data.no),
 );
 
-const queued = {
-  id: 'next',
-  no: '006',
-  title: 'Next project',
-  kind: 'Queued',
-  summary: 'A security or data project, in progress. This spot on the bench is saved for it.',
-  stack: ['TBC'],
-  status: 'Queued' as const,
-};
-
 const posterAlt =
-  'A workbench with a clipboard and stamp, a padlock, a basketball hoop, a VR headset with brass gears, a desk lamp, and an HDB block with a ginger cat on the roof.';
+  'A workbench with a clipboard and stamp, a padlock, a basketball hoop, a VR headset with brass gears, a desk lamp, a small arcade cabinet, and an HDB block with a ginger cat on the roof.';
 
-const labels = Object.fromEntries([
-  ...projects.map((p) => [p.data.bench, `${p.data.no} · ${p.data.title}`]),
-  ['next', `${queued.no} · ${queued.title}`],
-]);
+const labels = Object.fromEntries(
+  projects.map((p) => [p.data.bench, `${p.data.no} · ${p.data.title}`]),
+);
 ---
 
 <Base page="home" bare>
@@ -76,7 +65,7 @@ const labels = Object.fromEntries([
 
       <div class="stack-head">
         <span class="label">Order tickets</span>
-        <span class="label">{projects.length + 1}</span>
+        <span class="label">{projects.length}</span>
       </div>
       <ol class="stubs">
         {projects.map((p) => (
@@ -88,7 +77,6 @@ const labels = Object.fromEntries([
             href={url(`work/${p.id}/`)}
           />
         ))}
-        <TicketStub id={queued.id} no={queued.no} title={queued.title} status={queued.status} />
       </ol>
 
       <div class="desk-foot">
@@ -118,7 +106,6 @@ const labels = Object.fromEntries([
             href={url(`work/${p.id}/`)}
           />
         ))}
-        <Ticket {...queued} />
       </div>
     </aside>
   </div>

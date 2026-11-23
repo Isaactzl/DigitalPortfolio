@@ -2,9 +2,9 @@
 
 My portfolio site: [isaactzl.github.io/DigitalPortfolio](https://isaactzl.github.io/DigitalPortfolio/)
 
-![The workbench: a clipboard and stamp, a padlock, a basketball hoop, a VR headset with brass gears, a desk lamp, and an HDB block with a cat on the roof](public/og.png)
+![The workbench: a clipboard and stamp, a padlock, a basketball hoop, a VR headset with brass gears, a desk lamp, a small arcade cabinet, and an HDB block with a cat on the roof](public/og.png)
 
-The home page is a small workbench in 3D. Each object on it is something I built: the clipboard is the event-form tool from my internship, the hoop is Hardwood Hustle, the headset is Cogsworth's Forge, the HDB block is HDB Cats, and the padlock is the write-up of how I hardened this site. Click one, or pick it with the arrow keys, and the rubber stamp presses down and a work-order ticket slides out with the project. Switch the desk lamp on and the site goes into evening mode. The cat on the roof watches your cursor.
+The home page is a small workbench in 3D. Each object on it is something I built: the clipboard is the event-form tool from my internship, the hoop is Hardwood Hustle, the headset is Cogsworth's Forge, the HDB block is HDB Cats, the padlock is the write-up of how I hardened this site, and the arcade cabinet is Mainframe Run, a retro game I made to revise for my DISE role. Click one, or pick it with the arrow keys, and the rubber stamp presses down and a work-order ticket slides out with the project. Switch the desk lamp on and the site goes into evening mode. The cat on the roof watches your cursor.
 
 ## How it's built
 
@@ -29,7 +29,7 @@ flowchart LR
 
 ### The bench is code, not models
 
-There are no model files. Every object is built from Three.js primitives in its own file under [`src/scripts/bench/objects/`](src/scripts/bench/objects/), so the whole scene is about 150 KB of gzipped JavaScript and nothing else to download. The form on the clipboard, the cutting-mat grid and the slot's tag are drawn onto canvases at runtime. The QR codes are real: the one on the clipboard and the ones on each ticket open the matching case study.
+There are no model files. Every object is built from Three.js primitives in its own file under [`src/scripts/bench/objects/`](src/scripts/bench/objects/), so the whole scene is about 150 KB of gzipped JavaScript and nothing else to download. The form on the clipboard and the cutting-mat grid are drawn onto canvases at runtime. The QR codes are real: the one on the clipboard and the ones on each ticket open the matching case study.
 
 ### Decisions and trade-offs
 
@@ -39,6 +39,7 @@ There are no model files. Every object is built from Three.js primitives in its 
 - **Strict Content Security Policy.** Scripts, styles and fonts all come from this site, and there is no `unsafe-inline`. The page's CSS and the few lines that set the lamp before first paint are inlined so first paint never waits on another request; Astro writes each one's SHA-256 hash into the policy at build time, so any other inline code is blocked. The only third party allowed is the YouTube player, which loads from `youtube-nocookie.com` only after you press Play.
 - **The lamp is the dark mode.** It follows your system setting on first visit, remembers your choice, and is set by a tiny script before first paint so the page never flashes the wrong colours.
 - **Accessible by default.** The bench itself takes keyboard focus (arrow keys pick, Enter opens), tickets close with Escape and return focus, focus rings are visible, reduced motion is respected, and colour contrast is checked in both day and evening modes.
+- **The game is plain TypeScript on a canvas.** Mainframe Run ([`src/game/`](src/game/)) has no engine. Its rules (movement, bots, the clock, answer checking, saved stats) are pure functions with unit tests, and only the drawing and input touch the browser. The questions live in one JSON file that the content schema checks at build time.
 - **Sound is opt-in.** A stamp thunk and a light-switch click, synthesised with the Web Audio API so there are no audio files. Off until you switch it on, and remembered.
 
 ## Numbers
@@ -81,8 +82,10 @@ src/
   content/projects/   one Markdown file per case study
   content/other.json  smaller projects
   components/         tickets, stamp, QR code, video, the duplicate-booking demo and diagram
-  pages/              home, case studies, other work, about, how it works, 404
+  pages/              home, case studies, other work, about, how it works, the game, 404
   scripts/bench/      the 3D scene: stage, picking, stamp press, one file per object
+  game/               Mainframe Run: rules, sprites, input, the game loop
+  content/questions.json  the game's question bank
   scripts/            home page behaviour, the lamp, sound, the demo logic
   data/               site details and the lamp script (shared with the CSP config)
 e2e/                  Playwright tests

@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-export const benchObjects = ['forms', 'hoops', 'vr', 'cats', 'lock'] as const;
+export const benchObjects = ['forms', 'hoops', 'vr', 'cats', 'lock', 'arcade'] as const;
 
 const projects = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/projects' }),
@@ -18,7 +18,8 @@ const projects = defineCollection({
       coverAlt: z.string(),
       bench: z.enum(benchObjects),
       video: z.object({ src: z.string(), kind: z.enum(['file', 'youtube']) }).optional(),
-      live: z.url().optional(),
+      /** A full URL, or a path on this site such as "play/". */
+      live: z.string().optional(),
       gallery: z.array(z.object({ src: image(), alt: z.string(), caption: z.string() })).optional(),
     }),
 });

@@ -7,13 +7,13 @@ import { buildClipboard } from './objects/clipboard';
 import { buildHoop } from './objects/hoop';
 import { buildHeadset } from './objects/headset';
 import { buildHdb } from './objects/hdb';
-import { buildSlot } from './objects/slot';
+import { buildArcade } from './objects/arcade';
 import { buildPadlock } from './objects/padlock';
 import { buildProps } from './objects/props';
 import { buildLamp } from './objects/lamp';
 import type { BenchObject } from './objects/types';
 
-export type BenchId = 'forms' | 'hoops' | 'vr' | 'cats' | 'lock' | 'next';
+export type BenchId = 'forms' | 'hoops' | 'vr' | 'cats' | 'lock' | 'arcade';
 type PickId = BenchId | 'lamp';
 
 export interface BenchOptions {
@@ -34,7 +34,7 @@ const placements: Record<PickId, { at: [number, number]; turn: number }> = {
   vr: { at: [0.35, -1.65], turn: -0.15 },
   cats: { at: [-4.15, -1.45], turn: 0.2 },
   lock: { at: [0.75, 2.55], turn: -0.25 },
-  next: { at: [4.0, -1.65], turn: 0 },
+  arcade: { at: [4.0, -1.65], turn: -0.35 },
   lamp: { at: [-1.6, -3.55], turn: 0.3 },
 };
 
@@ -71,7 +71,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     vr: buildHeadset(),
     cats: hdb,
     lock: buildPadlock(),
-    next: buildSlot(),
+    arcade: buildArcade(),
     lamp: buildLamp(!small),
   };
   const ids = Object.keys(objects) as PickId[];

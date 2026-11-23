@@ -22,6 +22,7 @@ export async function getStaticPaths() {
 const { project, next } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
+const live = data.live && (/^https?:/.test(data.live) ? data.live : url(data.live));
 ---
 
 <Base title={data.title} description={data.summary} page="work" image={`og/${project.id}.png`}>
@@ -40,8 +41,8 @@ const { Content } = await render(project);
           <li>{s}</li>
         ))}
       </ul>
-      {data.live && (
-        <a class="live" href={data.live} rel="noopener">
+      {live && (
+        <a class="live" href={live} rel="noopener">
           Play it live
         </a>
       )}
