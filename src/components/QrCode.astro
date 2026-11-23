@@ -1,5 +1,6 @@
 ---
 import { encode } from 'uqr';
+import { qrPath } from '../data/qr-path';
 
 interface Props {
   /** Absolute URL the code should open. */
@@ -9,11 +10,7 @@ interface Props {
 
 const { value, size = 64 } = Astro.props;
 const { data, size: modules } = encode(value, { ecc: 'M', border: 2 });
-
-// One path for all dark modules keeps the markup small.
-const path = data
-  .flatMap((row, y) => row.map((on, x) => (on ? `M${x} ${y}h1v1h-1z` : '')))
-  .join('');
+const path = qrPath(data);
 ---
 
 <svg
