@@ -1,0 +1,428 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { url } from '../data/site';
+
+const bank = (await getCollection('questions')).map((entry) => entry.data);
+// "<" is escaped so no question text can ever close the script tag early.
+const bankJson = JSON.stringify(bank).replace(/</g, '\\u003c');
+---
+
+<Base
+  title="Mainframe Run"
+  description="A retro training-range game Isaac built to revise for his DISE assessment: crack terminals by answering Linux, networking, web, Python and security questions."
+  page="none"
+  image="og/mainframe-run.png"
+>
+  <section class="wrap play">
+    <div class="intro">
+      <span class="label">No. 006 · Training range</span>
+      <h1>Mainframe Run</h1>
+      <p>
+        Crack four terminals, then the mainframe, before the clock runs out. Every lock is a
+        revision question. <a href={url('work/mainframe-run/')}>How I built it</a>
+      </p>
+    </div>
+
+    <div id="game" class="game">
+      <div class="hud" aria-live="polite">
+        <span>
+          Time <b data-hud="time">4:00</b>
+        </span>
+        <span>
+          Cracked <b data-hud="cracked">0/5</b>
+        </span>
+        <span class="hint" data-hud="hint"></span>
+      </div>
+
+      <div class="screen">
+        <canvas
+          role="img"
+          aria-label="Mainframe Run. Move with the arrow keys or WASD and press E beside a terminal to hack it."
+        ></canvas>
+
+        <div class="panel" data-panel="start">
+          <h2>Break into the practice mainframe</h2>
+          <ul class="howto">
+            <li>
+              <b>Move</b> arrow keys or WASD
+            </li>
+            <li>
+              <b>Hack</b> E, Space or Enter beside a terminal
+            </li>
+            <li>
+              <b>Pause</b> Esc
+            </li>
+          </ul>
+          <p>Right answers add time. Wrong ones lock the terminal. Dodge the red firewall bots.</p>
+          <button type="button" class="go" data-start>
+            Start run
+          </button>
+          <p class="best">
+            Best score: <b data-best>0</b>
+          </p>
+        </div>
+
+        <div class="panel" data-panel="end" hidden>
+          <h2 data-end-title>Out of time</h2>
+          <p class="scoreline">
+            Score <b data-end-score>0</b> · Best <b data-end-best>0</b>
+          </p>
+          <h3 class="label">Revision report · all runs</h3>
+          <ul class="report" data-report></ul>
+          <p class="revise" data-revise></p>
+          <button type="button" class="go" data-restart>
+            Run again
+          </button>
+        </div>
+
+        <p class="paused" data-paused hidden>
+          Paused · press Esc to carry on
+        </p>
+      </div>
+
+      <div class="pad">
+        <button type="button" class="up" data-dir="up" aria-label="Move up">
+          ▲
+        </button>
+        <button type="button" class="left" data-dir="left" aria-label="Move left">
+          ◀
+        </button>
+        <button type="button" class="right" data-dir="right" aria-label="Move right">
+          ▶
+        </button>
+        <button type="button" class="down" data-dir="down" aria-label="Move down">
+          ▼
+        </button>
+        <button type="button" class="act" data-action>
+          Hack
+        </button>
+      </div>
+
+      <dialog class="question" aria-labelledby="q-prompt">
+        <p class="label" data-q-meta></p>
+        <h2 id="q-prompt" data-q-prompt></h2>
+        <pre data-q-code hidden><code></code></pre>
+        <div class="choices" data-q-choices></div>
+        <form class="typed" data-q-typed hidden>
+          <label>
+            Your answer
+            <input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+        <div class="result" data-q-result hidden>
+          <p class="verdict" data-q-verdict></p>
+          <p data-q-explain></p>
+          <button type="button" data-q-continue>
+            Continue
+          </button>
+        </div>
+      </dialog>
+    </div>
+  </section>
+
+  <script type="application/json" id="question-bank" set:html={bankJson} />
+</Base>
+
+<script>
+  import { startGame } from '../game/main';
+  import type { Question } from '../game/types';
+
+  const root = document.getElementById('game');
+  const bank = document.getElementById('question-bank')?.textContent;
+  if (root && bank) startGame(root, JSON.parse(bank) as Question[]);
+</script>
+
+<style>
+  .play {
+    padding: clamp(24px, 4vw, 48px) 0 56px;
+  }
+  .intro {
+    max-width: 640px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    margin: 10px 0 10px;
+  }
+  .intro p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .game {
+    --arcade: #0d0e16;
+    --arcade-ink: #e8e6dc;
+    --neon: #5ef08a;
+    max-width: 880px;
+    background: var(--arcade);
+    color: var(--arcade-ink);
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.6);
+  }
+  .hud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    padding: 4px 6px 10px;
+    font: 500 12px var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hud b {
+    color: var(--neon);
+    font-weight: 500;
+  }
+  .hud .hint {
+    margin-left: auto;
+    color: #a9b0c6;
+  }
+  .screen {
+    position: relative;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 11;
+    image-rendering: pixelated;
+    border-radius: 3px;
+  }
+  .panel,
+  .paused {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 10px;
+    padding: 16px;
+    text-align: center;
+    background: rgba(13, 14, 22, 0.88);
+    overflow-y: auto;
+  }
+  .panel[hidden],
+  .paused[hidden] {
+    display: none;
+  }
+  .panel h2 {
+    font-size: clamp(20px, 3vw, 30px);
+    color: var(--arcade-ink);
+  }
+  .howto {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font: 13px var(--mono);
+    display: grid;
+    gap: 4px;
+  }
+  .howto b {
+    color: var(--neon);
+    font-weight: 500;
+    margin-right: 6px;
+  }
+  .panel p {
+    margin: 0;
+    max-width: 46ch;
+    color: #c9cbd6;
+    font-size: 15px;
+  }
+  .go {
+    font: 500 13px var(--mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--arcade);
+    background: var(--neon);
+    border: 0;
+    border-radius: 2px;
+    padding: 12px 22px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #1f7a45;
+  }
+  .best,
+  .scoreline {
+    font: 13px var(--mono);
+  }
+  .panel h3 {
+    color: #a9b0c6;
+    margin-top: 6px;
+  }
+  .report {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+    width: min(100%, 360px);
+    font: 13px var(--mono);
+  }
+  .report :global(li) {
+    display: grid;
+    grid-template-columns: 1fr 110px 44px;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+  }
+  .report :global(meter) {
+    width: 100%;
+  }
+  .revise {
+    color: var(--neon) !important;
+    font: 500 13px var(--mono) !important;
+  }
+  .paused {
+    font: 500 14px var(--mono);
+    color: var(--neon);
+  }
+  .pad {
+    display: none;
+  }
+  @media (pointer: coarse) {
+    .pad {
+      display: grid;
+      grid-template-columns: repeat(3, 56px) 1fr;
+      grid-template-rows: repeat(3, 48px);
+      gap: 6px;
+      padding: 12px 6px 6px;
+      user-select: none;
+      touch-action: none;
+    }
+    .pad button {
+      font-size: 18px;
+      color: var(--arcade-ink);
+      background: #23263a;
+      border: 1px solid #3d4366;
+      border-radius: 6px;
+    }
+    .pad .up {
+      grid-area: 1 / 2;
+    }
+    .pad .left {
+      grid-area: 2 / 1;
+    }
+    .pad .right {
+      grid-area: 2 / 3;
+    }
+    .pad .down {
+      grid-area: 3 / 2;
+    }
+    .pad .act {
+      grid-area: 1 / 4 / 4 / 5;
+      justify-self: end;
+      width: 110px;
+      font: 500 14px var(--mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--arcade);
+      background: var(--neon);
+      border-color: var(--neon);
+      border-radius: 50%;
+      height: 110px;
+      align-self: center;
+    }
+  }
+
+  .question {
+    width: min(92vw, 560px);
+    border: 0;
+    border-radius: 6px;
+    padding: 22px;
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+  }
+  .question::backdrop {
+    background: rgba(5, 6, 10, 0.7);
+  }
+  .question h2 {
+    font-size: 22px;
+    margin: 8px 0 12px;
+  }
+  .question pre {
+    background: #0d0e16;
+    color: #e8e6dc;
+    padding: 12px 14px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font: 14px/1.5 var(--mono);
+    margin: 0 0 14px;
+  }
+  .question pre[hidden],
+  .question form[hidden],
+  .result[hidden] {
+    display: none;
+  }
+  .choices {
+    display: grid;
+    gap: 8px;
+  }
+  .choices :global(button),
+  .typed button,
+  .result button {
+    font: 15px var(--sans);
+    text-align: left;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 11px 14px;
+    cursor: pointer;
+  }
+  .choices :global(button:hover) {
+    border-color: var(--ink);
+  }
+  .typed {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 10px;
+  }
+  .typed label {
+    display: grid;
+    gap: 6px;
+    flex: 1 1 200px;
+    font: 500 11px var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .typed input {
+    font: 16px var(--mono);
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 10px 12px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .typed button,
+  .result button {
+    font: 500 12px var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border-color: var(--ink);
+    text-align: center;
+  }
+  .result {
+    display: grid;
+    gap: 10px;
+  }
+  .verdict {
+    font: 500 15px var(--mono);
+    letter-spacing: 0.08em;
+    margin: 0;
+    color: var(--ok);
+  }
+  .verdict[data-right='false'] {
+    color: var(--stamp);
+  }
+  .result p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+</style>
