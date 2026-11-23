@@ -4,7 +4,7 @@ My portfolio site: [isaactzl.github.io/DigitalPortfolio](https://isaactzl.github
 
 ![The workbench: a clipboard and stamp, a padlock, a basketball hoop, a VR headset with brass gears, a desk lamp, a small arcade cabinet, and an HDB block with a cat on the roof](public/og.png)
 
-The home page is a small workbench in 3D. Each object on it is something I built: the clipboard is the event-form tool from my internship, the hoop is Hardwood Hustle, the headset is Cogsworth's Forge, the HDB block is HDB Cats, the padlock is the write-up of how I hardened this site, and the arcade cabinet is Mainframe Run, a retro game I made to revise for my DISE role. Click one, or pick it with the arrow keys, and the rubber stamp presses down and a work-order ticket slides out with the project. Switch the desk lamp on and the site goes into evening mode. The cat on the roof watches your cursor.
+The home page is a small workbench in 3D. Each object on it is something I built: the clipboard is the event-form tool from my internship, the hoop is Hardwood Hustle, the headset is Cogsworth's Forge, the HDB block is HDB Cats, the padlock is the write-up of how I hardened this site, and the arcade cabinet is Mainframe Run, a retro game I made to revise for my DISE role. Click one, or pick it with the arrow keys, and the rubber stamp presses down and a work-order ticket slides out with the project. Switch the desk lamp on and the site goes into evening mode. The cat on the roof watches your cursor, and the basketball bounces if you click it.
 
 ## How it's built
 

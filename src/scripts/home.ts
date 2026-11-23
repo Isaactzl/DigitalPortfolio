@@ -1,6 +1,6 @@
 import type { Bench, BenchId } from './bench';
 import { lampIsOn, setLamp } from './lamp';
-import { playThunk, setSound, soundIsOn } from './sound';
+import { playBounce, playThunk, setSound, soundIsOn } from './sound';
 
 const scene = document.querySelector<HTMLElement>('#bench');
 const slot = document.querySelector<HTMLElement>('.ticket-slot');
@@ -107,6 +107,7 @@ async function startBench() {
     evening: lampIsOn(),
     onSelect: open,
     onLampClick: () => setLamp(!lampIsOn()),
+    onBounce: playBounce,
     onHover: lightStub,
   });
   enableBenchKeyboard(scene);

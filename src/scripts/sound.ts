@@ -1,5 +1,5 @@
 /**
- * Two small sounds, made in the browser rather than loaded as files. Off unless the
+ * Small sounds, made in the browser rather than loaded as files. Off unless the
  * visitor switches them on, and the choice is remembered.
  */
 let context: AudioContext | null = null;
@@ -74,4 +74,22 @@ export function playClick() {
   tick.connect(gain).connect(ctx.destination);
   tick.start(now);
   tick.stop(now + 0.04);
+}
+
+/** A basketball landing: a hollow, ringing thud, quieter as the bounces die down. */
+export function playBounce(impact: number) {
+  if (!soundIsOn()) return;
+  const ctx = audio();
+  const now = ctx.currentTime;
+  const loudness = Math.min(0.4, impact * 0.08);
+  const body = ctx.createOscillator();
+  const gain = ctx.createGain();
+  body.type = 'sine';
+  body.frequency.setValueAtTime(180, now);
+  body.frequency.exponentialRampToValueAtTime(90, now + 0.15);
+  gain.gain.setValueAtTime(loudness, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+  body.connect(gain).connect(ctx.destination);
+  body.start(now);
+  body.stop(now + 0.25);
 }

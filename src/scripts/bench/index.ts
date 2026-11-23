@@ -14,7 +14,10 @@ import { buildLamp } from './objects/lamp';
 import type { BenchObject } from './objects/types';
 
 export type BenchId = 'forms' | 'hoops' | 'vr' | 'cats' | 'lock' | 'arcade';
-type PickId = BenchId | 'lamp';
+/** Things on the bench with a 3D model of their own. */
+type ObjectId = BenchId | 'lamp';
+/** Anything that answers a click; the ball is part of the hoop but bounces on its own. */
+type PickId = ObjectId | 'ball';
 
 export interface BenchOptions {
   labels: Record<BenchId, string>;
@@ -25,10 +28,12 @@ export interface BenchOptions {
   qrUrl: string;
   onSelect: (id: BenchId) => void;
   onLampClick: () => void;
+  /** The ball hit the bench; `impact` is how fast it was falling. */
+  onBounce?: (impact: number) => void;
   onHover?: (id: BenchId | null) => void;
 }
 
-const placements: Record<PickId, { at: [number, number]; turn: number }> = {
+const placements: Record<ObjectId, { at: [number, number]; turn: number }> = {
   forms: { at: [-2.3, 1.4], turn: 0.22 },
   hoops: { at: [2.7, 1.5], turn: -0.3 },
   vr: { at: [0.35, -1.65], turn: -0.15 },
@@ -65,19 +70,20 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
   const clipboard = buildClipboard(options.qrUrl);
   const hdb = buildHdb();
   await nextTask();
-  const objects: Record<PickId, BenchObject> = {
+  const hoop = buildHoop();
+  const objects: Record<ObjectId, BenchObject> = {
     forms: clipboard,
-    hoops: buildHoop(),
+    hoops: hoop,
     vr: buildHeadset(),
     cats: hdb,
     lock: buildPadlock(),
     arcade: buildArcade(),
     lamp: buildLamp(!small),
   };
-  const ids = Object.keys(objects) as PickId[];
-  const lift = Object.fromEntries(ids.map((id) => [id, 0])) as Record<PickId, number>;
+  const ids = Object.keys(objects) as ObjectId[];
+  const lift = Object.fromEntries(ids.map((id) => [id, 0])) as Record<ObjectId, number>;
   // Each object keeps its own clock so hovering can speed it up without a jump.
-  const clocks = Object.fromEntries(ids.map((id) => [id, 0])) as Record<PickId, number>;
+  const clocks = Object.fromEntries(ids.map((id) => [id, 0])) as Record<ObjectId, number>;
   for (const id of ids) {
     const { group } = objects[id];
     const { at, turn } = placements[id];
@@ -86,6 +92,8 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     scene.add(group);
     picker.register(id, group);
   }
+  // Registered after the hoop, so clicks on the ball are the ball's, not the project's.
+  picker.register('ball', hoop.ball);
   await nextTask();
 
   let dusk = options.evening ? 1 : 0;
@@ -154,7 +162,9 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     if (e.pointerType !== 'mouse') touchGazeUntil = performance.now() + TOUCH_GAZE_SECONDS * 1000;
     const id = picker.pick();
     if (id === 'lamp') options.onLampClick();
-    else if (id) options.onSelect(id);
+    else if (id === 'ball') {
+      if (!options.reducedMotion) hoop.kick();
+    } else if (id) options.onSelect(id);
   });
 
   const box = new THREE.Box3();
@@ -165,12 +175,16 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
       tip.classList.remove('on');
       return;
     }
-    box.setFromObject(objects[id].group);
+    box.setFromObject(id === 'ball' ? hoop.ball : objects[id].group);
     projected
       .set((box.min.x + box.max.x) / 2, box.max.y, (box.min.z + box.max.z) / 2)
       .project(camera);
     tip.textContent =
-      id === 'lamp' ? `Lamp · switch ${duskTarget ? 'off' : 'on'}` : options.labels[id];
+      id === 'lamp'
+        ? `Lamp · switch ${duskTarget ? 'off' : 'on'}`
+        : id === 'ball'
+          ? 'Ball · bounce it'
+          : options.labels[id];
     tip.style.left = `${(projected.x * 0.5 + 0.5) * canvas.clientWidth}px`;
     tip.style.top = `${(-projected.y * 0.5 + 0.5) * canvas.clientHeight}px`;
     tip.classList.add('on');
@@ -184,7 +198,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     const nowHovered = mouseInside ? picker.pick() : null;
     if (nowHovered !== hovered) {
       hovered = nowHovered;
-      options.onHover?.(hovered === 'lamp' ? null : hovered);
+      options.onHover?.(hovered === 'lamp' || hovered === 'ball' ? null : hovered);
     }
     canvas.style.cursor = hovered ? 'pointer' : 'grab';
 
@@ -197,6 +211,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
       objects[id].group.position.y = lift[id];
       Picker.glow(objects[id].group, id === active);
     }
+    Picker.glow(hoop.ball, active === 'ball');
     placeTip(active);
 
     if (dusk !== duskTarget) {
@@ -210,6 +225,8 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
     hdb.watch(looking ? picker.pointerAt(catHead, gaze) : null, dt);
 
     stampPress.update(dt);
+    const impact = hoop.update(dt);
+    if (impact > 0) options.onBounce?.(impact);
     if (!options.reducedMotion) {
       for (const id of ids) {
         clocks[id] += dt * (id === active ? HOVER_SPEED : 1);
@@ -230,6 +247,7 @@ export async function mountBench(host: HTMLElement, options: BenchOptions) {
       lifting ||
       cameraMoving ||
       stampPress.busy() ||
+      hoop.busy() ||
       dusk !== duskTarget ||
       performance.now() < dollyUntil;
     if (!settling && performance.now() - lastPoke > sleepAfter) {
