@@ -11,6 +11,11 @@ import { TOPIC_LABELS, type BaseQuestion, type Question, type Topic } from './ty
 const GLIDE_SPEED = 9;
 const REPORT_ORDER: Topic[] = ['linux', 'network', 'web', 'python', 'data', 'mainframe'];
 
+/** The HUD updates every frame; rewriting unchanged text would make screen readers repeat it. */
+function setText(el: Element, text: string) {
+  if (el.textContent !== text) el.textContent = text;
+}
+
 function clock(seconds: number) {
   const s = Math.max(0, Math.ceil(seconds));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -65,9 +70,9 @@ export function startGame(root: HTMLElement, bank: Question[]) {
   }
 
   function updateHud() {
-    hud.time.textContent = clock(run.timeLeft);
+    setText(hud.time, clock(run.timeLeft));
     const cracked = Object.values(run.terminals).filter((s) => s === 'cracked').length;
-    hud.cracked.textContent = `${cracked}/${floor.terminals.length}`;
+    setText(hud.cracked, `${cracked}/${floor.terminals.length}`);
 
     const target = run.status === 'playing' ? adjacentTarget(floor, run.player, run.facing) : null;
     let hint = '';
@@ -80,7 +85,7 @@ export function startGame(root: HTMLElement, bank: Question[]) {
     } else if (target?.kind === 'mainframe') {
       hint = 'Mainframe · hack it';
     }
-    hud.hint.textContent = hint;
+    setText(hud.hint, hint);
   }
 
   function showQuestion(question: BaseQuestion, part: 1 | 2) {

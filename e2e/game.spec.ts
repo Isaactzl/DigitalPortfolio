@@ -85,6 +85,15 @@ test('walking to the first terminal and answering right cracks it', async ({ pag
   expect(problems).toEqual([]);
 });
 
+test('screen readers hear progress, not the clock ticking', async ({ page }) => {
+  await page.goto('play/');
+  await expect(
+    page.locator('[aria-live] [data-hud="time"], [aria-live][data-hud="time"]'),
+  ).toHaveCount(0);
+  await expect(page.locator('[data-hud="cracked"][aria-live]')).toHaveCount(1);
+  await expect(page.locator('[data-hud="hint"][aria-live]')).toHaveCount(1);
+});
+
 test('running out of time shows the revision report', async ({ page }) => {
   // Four simulated minutes is ~15,000 rendered frames, which takes longer than the default limit.
   test.setTimeout(120_000);
