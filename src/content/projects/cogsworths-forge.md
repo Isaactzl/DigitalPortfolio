@@ -8,6 +8,13 @@ summary: A VR game where you're an intern to the town's blacksmith. My first bui
 cover: ../../assets/projects/cogsworths-forge.webp
 coverAlt: Cogsworth's Forge cover art, a brass and copper steampunk workshop.
 bench: vr
+gallery:
+  - src: ../../assets/gallery/cogsworths-forge/workshop.webp
+    alt: Inside the forge in VR, with Cogsworth the robot by the workbench and an arrow showing where the materials go.
+    caption: Cogsworth's workshop, through the headset.
+  - src: ../../assets/gallery/cogsworths-forge/crafting.webp
+    alt: A crafting order for an iron mace, with the recipe grid on one panel and a craft button on the other.
+    caption: Crafting to order, an iron mace for Cogsworth.
 ---
 
 ## What it is

@@ -6,6 +6,7 @@ import Stamp from '../../components/Stamp.astro';
 import Video from '../../components/Video.astro';
 import DuplicateDemo from '../../components/DuplicateDemo.astro';
 import AutomationDiagram from '../../components/AutomationDiagram.astro';
+import Gallery from '../../components/Gallery.astro';
 import { url } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -63,6 +64,7 @@ const { Content } = await render(project);
     <div class="body">
       <Content />
     </div>
+    {data.gallery && <Gallery items={data.gallery} />}
     {project.id === 'event-form-automation' && <DuplicateDemo />}
 
     <nav class="case-foot" aria-label="More work">

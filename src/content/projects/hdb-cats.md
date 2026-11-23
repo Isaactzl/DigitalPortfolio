@@ -8,6 +8,16 @@ summary: Tower defence where the void deck is the last line and the defenders ar
 cover: ../../assets/projects/hdb-cats.png
 coverAlt: HDB Cats title screen, with cat defenders in front of an HDB block.
 bench: cats
+gallery:
+  - src: ../../assets/gallery/hdb-cats/estate.webp
+    alt: The HDB block with its void deck and playground, on a small island of grass under a blue sky.
+    caption: The estate you're defending.
+  - src: ../../assets/gallery/hdb-cats/wave.webp
+    alt: Wave 3 in progress, with enemies walking the path past cat towers, an HP bar, 35 of 61 enemies defeated, and cat cards along the bottom.
+    caption: Wave 3, with the cat cards along the bottom.
+  - src: ../../assets/gallery/hdb-cats/upgrades.webp
+    alt: The upgrade screen, a honeycomb of upgrade icons beside the Chilli Sauce Cat and its two tower types.
+    caption: Upgrades, here for the Chilli Sauce Cat.
 video:
   src: dtA3vYOva8c
   kind: youtube

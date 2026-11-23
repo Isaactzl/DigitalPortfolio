@@ -19,6 +19,7 @@ const projects = defineCollection({
       bench: z.enum(benchObjects),
       video: z.object({ src: z.string(), kind: z.enum(['file', 'youtube']) }).optional(),
       live: z.url().optional(),
+      gallery: z.array(z.object({ src: image(), alt: z.string(), caption: z.string() })).optional(),
     }),
 });
 

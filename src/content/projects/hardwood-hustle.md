@@ -8,6 +8,13 @@ summary: Timed player auctions for a couch full of GMs. My friends and I ran thi
 cover: ../../assets/projects/hardwood-hustle.png
 coverAlt: Hardwood Hustle's home screen, "The $25 GM", next to the draft setup panel.
 bench: hoops
+gallery:
+  - src: ../../assets/gallery/hardwood-hustle/auction.png
+    alt: A live auction for Tyrese Maxey, showing his attribute grades, a radar chart, the current bid and bid buttons for four GMs.
+    caption: A live auction. Scout the player, then bid.
+  - src: ../../assets/gallery/hardwood-hustle/tie-break-wheel.png
+    alt: The Wheel of Misfortune tie-break screen, locking on Player 1.
+    caption: No bids and tied rosters? The wheel decides.
 video:
   src: media/hardwood-hustle.mp4
   kind: file
