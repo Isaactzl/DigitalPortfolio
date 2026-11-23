@@ -21,7 +21,6 @@ desktop.ini
 # Local tooling
 .env
 .env.*
-.claude/settings.local.json
 
 # Test output
 test-results/
