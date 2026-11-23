@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { url } from '../data/site';
+import { jsonForScript } from '../data/json-script';
 
-const bank = (await getCollection('questions')).map((entry) => entry.data);
-// "<" is escaped so no question text can ever close the script tag early.
-const bankJson = JSON.stringify(bank).replace(/</g, '\\u003c');
+const bankJson = jsonForScript((await getCollection('questions')).map((entry) => entry.data));
 ---
 
 <Base

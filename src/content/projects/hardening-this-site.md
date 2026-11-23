@@ -20,7 +20,7 @@ My old CV had my home address on it. I'd replaced the PDF long ago, but git keep
 
 - Rewrote the history with `git filter-repo` to drop every old version of the CV, after taking a backup.
 - Reworded an old commit message that named where I'm posted for NS.
-- Force-pushed with `--force-with-lease`, so it would refuse if anyone else had pushed in the meantime.
+- Force-pushing wasn't enough. GitHub keeps old commits reachable by their hash for a while, so I deleted the repo and recreated it from the cleaned history.
 - Added a `.gitignore` so drafts, the CV's source file and raw videos can't be committed by accident.
 
 The public CV now says "Singapore Armed Forces" and nothing more specific.
@@ -40,6 +40,8 @@ The browser tests listen for CSP violations and fail if a single one happens, so
 ## Keeping the dependencies honest
 
 `npm audit` runs against everything. When a Lighthouse testing package pulled in several high-severity advisories, I dropped it and ran Lighthouse through its GitHub Action instead, which keeps it out of the project entirely.
+
+The build pipeline gets the same treatment. Every GitHub Action is pinned to an exact commit rather than a version tag, since a tag can be moved to point at different code. Each job only gets the permissions it needs: only the deploy job can publish the site, and the build that feeds it doesn't reuse a shared dependency cache. Dependabot keeps the pins current.
 
 ## What's still open
 

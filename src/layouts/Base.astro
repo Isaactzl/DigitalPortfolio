@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { lampScript } from '../data/lamp-script';
+import { jsonForScript } from '../data/json-script';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site, url } from '../data/site';
@@ -57,7 +58,7 @@ const person = {
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ece5d6" />
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(person)} />
+    <script is:inline type="application/ld+json" set:html={jsonForScript(person)} />
   </head>
   <body class:list={[`page-${page}`]}>
     <a class="skip" href="#main">

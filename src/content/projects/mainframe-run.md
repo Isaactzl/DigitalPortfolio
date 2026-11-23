@@ -44,3 +44,5 @@ The browser tests then play it for real: walk to the first terminal, answer, and
 ## The questions
 
 The questions are mine, written from what I've been studying. They're not from any real test. They live in one JSON file that's checked when the site builds, so a question with a missing answer can't ship.
+
+Yes, the answers are in the page source. It's a study tool, not an exam, and there's no server to keep them on, so there's nothing to protect: open DevTools and you've only cheated yourself. The question text goes into the page with `<` escaped and is only ever shown as plain text, so a question can't inject markup either.
