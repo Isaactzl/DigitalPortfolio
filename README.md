@@ -75,6 +75,10 @@ npm test             # unit tests
 npm run test:e2e     # browser tests against the production build
 ```
 
+## Deployment
+
+In the repository's **Settings → Pages**, enable Pages and select **GitHub Actions** as the build and deployment source. The Deploy workflow runs on pushes to `main` and can also be started manually from the Actions tab. If a previous run has duplicate Pages artifacts, start a new workflow run rather than re-running that old run.
+
 ## Layout
 
 ```
